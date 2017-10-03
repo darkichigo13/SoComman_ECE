@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1446671344 source:c:\users\daniel sanchez palma\documents\etudes\post dut\ecole d'ingénieur\ece\informatique\sokoban_grpa_amelineau_sanchez\main.c
+	<stdio.h>
+	<stdlib.h>
+
