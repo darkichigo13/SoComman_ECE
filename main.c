@@ -8,6 +8,15 @@
 
 int main()
 {
-    printf("Hello world!\n");
+    Player player;
+    Player* pointeur = &player;
+    initPlayer(pointeur);
+
+
+
+    printf("%d\n",player.pos_x);
+    printf("%d\n\n",player.pos_y);
     return 0;
 }
+
+
