@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "Player.h"
 #include "Box.h"
@@ -159,17 +160,27 @@ int option ()
     return(choix);
 }
 
-void implementationMatrice ( unsigned int matrice[nbRowsMatrix][nbColsMatrix],Box *tabBox,Player *tabPlayer,Wall *tabWall,int dimB,int dimP,int dimW,)
+void implementationMatrice ( unsigned int matrice[nbRowsMatrix][nbColsMatrix],Box *tabBox,Player *tabPlayer,Wall *tabWall,int dimB,int dimP,int dimW)
 {
     int i =0;
     for (i=0;i<dimB;i++)
     {
         if(tabBox[i].win=0)
         {
-
+            matrice[tabBox[i].pos_x][tabBox[i].pos_y]=3;
         }
     }
+    for (i=0;i<dimW;i++)
+    {
+        matrice[tabWall[i].pos_x][tabWall[i].pos_y]=2;
+    }
+    for (i=0;i<dimP;i++)
+    {
+        matrice[tabPlayer[i].pos_x][tabPlayer[i].pos_y]=10;
+    }
+}
 
-
+void loadfile()
+{
 
 }
