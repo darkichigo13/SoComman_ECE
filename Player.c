@@ -1,18 +1,19 @@
 #include "Player.h"
+#include <stdlib.h>
 
 
 // initialisation struct Player :
 void initPlayer (Player* pointeur)
 {
-    pointeur->pos_x=20;
-    pointeur->pos_y=21;
+    pointeur->pos_x=0;
+    pointeur->pos_y=0;
 }
-int alloctabPlayer (Player*pointeur, int dim)
+int alloctabPlayer (int dim)
 {
-    pointeur = null;
+    Player*pointeur = NULL;
 
-    pointeur = malloc(dim*sizeof(player));
-    if (pointeur == null) // si l'allocation a échoué
+    pointeur = malloc(dim*sizeof(Player));
+    if (pointeur == NULL) // si l'allocation a échoué
     {
         exit(0); // on arrête immédiatement le programme
     }

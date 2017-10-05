@@ -12,6 +12,13 @@ int main()
     Player* pointeur = &player;
     initPlayer(pointeur);
 
+    Player*pttab=0;
+    int dim=20;
+
+    pttab = alloctabPlayer(dim);
+
+    pttab
+
 
 
     printf("%d\n",player.pos_x);
