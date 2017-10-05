@@ -30,6 +30,6 @@ void affichageTabBox (Box * tab, int dim)
 
     for (i=0;i<dim;i++)
     {
-    printf("posx : %d / posy : %d\n",tab[i].pos_x,tab[i].pos_y);
+    printf("Box posx : %d / Box posy : %d\n",tab[i].pos_x,tab[i].pos_y);
     }
 }
