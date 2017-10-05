@@ -85,6 +85,7 @@ int menu ()
 int jouer()
 {
     int i=0;
+    int j=0;
     int dimB=20;
     int dimP=20;
     int dimW=20;
@@ -98,13 +99,19 @@ int jouer()
     Player *tabPlayer = dynamicAllocPlayer(dimP);
     Wall *tabWall = dynamicAllocWall(dimW);
 
-
-
-
     // gestion des fichiers
-    char nameText [] = "C:\\Users\\ELEVE\\Documents\\My_Sokoban\\SoCo";
+    char nameText [] = "C:\\Users\\ELEVE\\Documents\\My_Sokoban\\SoComman_ECE\\terrain_1.txt";
+                                                                                              printf("fichier : %s.txt\n\n",nameText);
 
     loadfile(nameText,matrice);
+
+    for(i=0;i<nbRowsMatrix;i++)
+    {
+        for(j=0;j<nbColsMatrix;j++)
+    {
+        printf("%d",matrice[i][j]);
+    }
+    }
 
 
     while (endgame !=1)
@@ -204,15 +211,15 @@ void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix])
     int j=0;
     char caractereActuel;
     FILE* fichier = NULL;
-
+                                                                                                    printf("avant transcription\n\n");
     fichier = fopen(name, "r+");
     if(fichier == NULL)
     {
-        exit(0);
+       exit(0);
         printf("Impossible d'ouvrir le fichier %c.txt",name);
     }
     else
-    {
+    {  printf("transcription en cours...\n\n");
         do
         {
             i++;
@@ -220,15 +227,16 @@ void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix])
             {
                 j++;
                 caractereActuel=fgetc(fichier);
-                if (caractereActuel != '\n')
+                if (caractereActuel != '\n' || caractereActuel !='EOF')
                 {
-                    // matrice[i][j] // caracter reading
-                }
+                    matrice[i][j]=caractereActuel;
+                }                                                             printf("%c",caractereActuel);
             }
-            while (caractereActuel != '\n');
+            while (caractereActuel != '\n' || caractereActuel !='EOF');
+            printf("\n");
+            printf("%c",caractereActuel);
         }
-        while (caractereActuel != EOF);
-
+        while (caractereActuel != 'EOF');
     }
 
 
