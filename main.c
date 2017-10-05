@@ -24,6 +24,28 @@ printf("\n\n");
     affichageTabWall(tabWall, dim);
 menu();
 
+    /*while(!kbhit()){
+        char key = getchar();
+
+        switch(key){
+            case('z'):
+                printf("%c",key);
+                break;
+
+            case('q'):
+                printf("%c",key);
+                break;
+
+            case('s'):
+                printf("%c",key);
+                break;
+
+            case('d'):
+                printf("%c",key);
+                break;
+        }
+    }*/
+
     return 0;
 }
 int menu ()
