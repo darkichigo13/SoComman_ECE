@@ -8,22 +8,13 @@
 
 int main()
 {
-    Player player;
-    Player* pointeur = &player;
-    initPlayer(pointeur);
-
-    Player*pttab=0;
+    int i=0;
     int dim=20;
 
-    pttab = alloctabPlayer(dim);
-
-    pttab
-
+    Player *tabPlayer = dynamicAllocPlayer(dim);
+    affichageTab(tabPlayer, dim);
 
 
-    printf("%d\n",player.pos_x);
-    printf("%d\n\n",player.pos_y);
     return 0;
 }
-
 

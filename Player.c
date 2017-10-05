@@ -1,25 +1,34 @@
 #include "Player.h"
 #include <stdlib.h>
 
-
-// initialisation struct Player :
-void initPlayer (Player* pointeur)
+Player * dynamicAllocPlayer (int dim)
 {
-    pointeur->pos_x=0;
-    pointeur->pos_y=0;
-}
-int alloctabPlayer (int dim)
-{
-    Player*pointeur = NULL;
+    Player *tabPlayer= NULL;
+    int i = 0;
 
-    pointeur = malloc(dim*sizeof(Player));
-    if (pointeur == NULL) // si l'allocation a échoué
+
+    tabPlayer = malloc (dim * sizeof (Player));
+    if (tabPlayer == NULL) // si l'allocation a échoué
     {
         exit(0); // on arrête immédiatement le programme
     }
 
-    // on peut continuer le programme normalement sinon
+    // initialisation struct Player :
+    for (i=0; i<dim; i++)
+    {
+        tabPlayer[i].pos_x=1;
+        tabPlayer[i].pos_y=1;
+    }
+    return tabPlayer;
 
-    return (pointeur);
 }
 
+void affichageTab (Player * tab, int dim)
+{
+    int i=0;
+
+    for (i=0;i<dim;i++)
+    {
+    printf("posx : %d / posy : %d\n",tab[i].pos_x,tab[i].pos_y);
+    }
+}
