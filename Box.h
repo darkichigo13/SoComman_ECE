@@ -1,5 +1,6 @@
 #include <stdbool.h>
 
+typedef struct Box Box;
 struct Box
    {
    char id[20];

@@ -1,3 +1,4 @@
+typedef struct Wall Wall;
 struct Wall
    {
    char id[20];

@@ -16,14 +16,14 @@ Player * dynamicAllocPlayer (int dim)
     // initialisation struct Player :
     for (i=0; i<dim; i++)
     {
-        tabPlayer[i].pos_x=1;
-        tabPlayer[i].pos_y=1;
+        tabPlayer[i].pos_x=0;
+        tabPlayer[i].pos_y=0;
     }
     return tabPlayer;
 
 }
 
-void affichageTab (Player * tab, int dim)
+void affichageTabPlayer (Player * tab, int dim)
 {
     int i=0;
 

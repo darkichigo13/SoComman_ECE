@@ -12,10 +12,16 @@ int main()
     unsigned int matrice[nbRowsMatrix][nbColsMatrix];
 
     int i=0;
-    int dim=20;
+    int dim=2;
 
     Player *tabPlayer = dynamicAllocPlayer(dim);
-    affichageTab(tabPlayer, dim);
+    affichageTabPlayer(tabPlayer, dim);
+printf("\n\n");
+    Box *tabBox = dynamicAllocBox(dim);
+    affichageTabBox(tabBox, dim);
+printf("\n\n");
+    Wall *tabWall = dynamicAllocWall(dim);
+    affichageTabWall(tabWall, dim);
 
     return 0;
 }
