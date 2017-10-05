@@ -8,9 +8,9 @@ void initPlayer (Player* pointeur)
     pointeur->pos_x=0;
     pointeur->pos_y=0;
 }
-int alloctabPlayer (Player*pointeur, int dim)
+int alloctabPlayer (int dim)
 {
-    pointeur = NULL;
+    Player*pointeur = NULL;
 
     pointeur = malloc(dim*sizeof(Player));
     if (pointeur == NULL) // si l'allocation a échoué
