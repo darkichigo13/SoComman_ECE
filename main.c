@@ -5,6 +5,7 @@
 #include "Box.h"
 #include "Wall.h"
 #include "Goal.h"
+#include "Constante.h"
 
 int main()
 {
@@ -16,10 +17,6 @@ int main()
     int dim=20;
 
     pttab = alloctabPlayer(dim);
-
-    pttab
-
-
 
     printf("%d\n",player.pos_x);
     printf("%d\n\n",player.pos_y);
