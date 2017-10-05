@@ -19,6 +19,7 @@ Box * dynamicAllocBox (int dim)
     {
         tabBox[i].pos_x=1;
         tabBox[i].pos_y=1;
+        tabBox[i].win=0;
     }
     return tabBox;
 
