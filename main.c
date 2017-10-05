@@ -7,7 +7,7 @@
 #include "Wall.h"
 #include "Goal.h"
 #include "Constante.h"
-
+/////////////////////////////////////////////////////////////////////////////////////////////
 int main()
 {
     menu();
@@ -36,6 +36,8 @@ int main()
 
     return 0;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 int menu ()
 {
     int choix=0;
@@ -59,7 +61,8 @@ int menu ()
         switch (choix)
         {
         case 1 :
-            jouer();                                                                    printf("sortie du jouer/ menu");
+            jouer();
+            printf("sortie du jouer/ menu");
             break;
         case 2 :
             choix = option();
@@ -74,9 +77,11 @@ int menu ()
             break;
         }
     }
-                                                                                        printf("sortie du menu");
+    printf("sortie du menu");
     return (0);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 int jouer()
 {
     int i=0;
@@ -93,13 +98,23 @@ int jouer()
     Player *tabPlayer = dynamicAllocPlayer(dimP);
     Wall *tabWall = dynamicAllocWall(dimW);
 
+
+
+
+    // gestion des fichiers
+    char nameText [] = "C:\\Users\\ELEVE\\Documents\\My_Sokoban\\SoCo";
+
+    loadfile(nameText,matrice);
+
+
     while (endgame !=1)
     {
         system("cls");
-        endgame = findWin(tabBox,20);
+        endgame = findWin(tabBox,dimB);
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////
 int findWin(Box * tab, int dim)
 {
     int i =0;
@@ -119,6 +134,7 @@ int findWin(Box * tab, int dim)
     return (compter);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////
 int option ()
 {
     int choix=0;
@@ -160,27 +176,61 @@ int option ()
     return(choix);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////
 void implementationMatrice ( unsigned int matrice[nbRowsMatrix][nbColsMatrix],Box *tabBox,Player *tabPlayer,Wall *tabWall,int dimB,int dimP,int dimW)
 {
     int i =0;
-    for (i=0;i<dimB;i++)
+    for (i=0; i<dimB; i++)           // box implementation
     {
-        if(tabBox[i].win=0)
+        if(tabBox[i].win=0)          // if not placed on a goal case
         {
             matrice[tabBox[i].pos_x][tabBox[i].pos_y]=3;
         }
     }
-    for (i=0;i<dimW;i++)
+    for (i=0; i<dimW; i++)           // wall implementation
     {
         matrice[tabWall[i].pos_x][tabWall[i].pos_y]=2;
     }
-    for (i=0;i<dimP;i++)
+    for (i=0; i<dimP; i++)            // player implementation
     {
         matrice[tabPlayer[i].pos_x][tabPlayer[i].pos_y]=10;
     }
 }
 
-void loadfile()
+/////////////////////////////////////////////////////////////////////////////////////////////
+void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix])
 {
+    int i=0;
+    int j=0;
+    char caractereActuel;
+    FILE* fichier = NULL;
+
+    fichier = fopen(name, "r+");
+    if(fichier == NULL)
+    {
+        exit(0);
+        printf("Impossible d'ouvrir le fichier %c.txt",name);
+    }
+    else
+    {
+        do
+        {
+            i++;
+            do
+            {
+                j++;
+                caractereActuel=fgetc(fichier);
+                if (caractereActuel != '\n')
+                {
+                    // matrice[i][j] // caracter reading
+                }
+            }
+            while (caractereActuel != '\n');
+        }
+        while (caractereActuel != EOF);
+
+    }
+
+
 
 }
