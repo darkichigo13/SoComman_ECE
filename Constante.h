@@ -1,1 +1,2 @@
-unsigned int matrice[12][12];
+unsigned int nbRowsMatrix = 10;
+unsigned int nbColsMatrix = 10;

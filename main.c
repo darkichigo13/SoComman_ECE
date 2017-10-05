@@ -9,6 +9,9 @@
 
 int main()
 {
+
+    unsigned int matrice[nbRowsMatrix][nbColsMatrix];
+
     Player player;
     Player* pointeur = &player;
     initPlayer(pointeur);
