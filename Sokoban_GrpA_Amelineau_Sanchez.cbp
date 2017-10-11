@@ -26,6 +26,11 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Box.h" />
+		<Unit filename="Constante.h" />
+		<Unit filename="Goal.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Goal.h" />
 		<Unit filename="Player.c">
 			<Option compilerVar="CC" />
 		</Unit>
