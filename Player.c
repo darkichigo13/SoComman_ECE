@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <stdlib.h>
+#include <stdbool.h>
 
 Player * dynamicAllocPlayer (int dim)
 {
@@ -33,3 +34,48 @@ void affichageTabPlayer (Player * tab, int dim)
     }
 }
 
+void movePlayer (Player *player, char deplacement){
+    bool response;
+    switch (deplacement){
+    case 'z' :
+        response = verifyMove(player->pos_x , (player->pos_y - 1));
+        if (response){
+            player->pos_y = player->pos_y - 1;
+        }
+        else if (!response){
+            //TO-DO return error
+        }
+
+    case 'q' :
+        response = verifyMove((player->pos_x - 1), player->pos_y);
+        if (response){
+            player->pos_x = player->pos_x - 1;
+        }
+        else if (!response){
+            //TO-DO return error
+        }
+
+    case 's' :
+        response = verifyMove(player->pos_x, (player->pos_y + 1));
+        if (response){
+            player->pos_y = player->pos_y + 1;
+        }
+        else if (!response){
+            //TO-DO return error
+        }
+
+    case 'd' :
+        response = verifyMove((player->pos_x + 1), player->pos_y);
+        if (response){
+            player->pos_x = player->pos_x + 1;
+        }
+        else if (!response){
+            //TO-DO return error
+        }
+    }
+}
+
+bool verifyMove (int pos_x, int pos_y){
+    //TO-DO
+    return (1);
+}

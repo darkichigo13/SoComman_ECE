@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 typedef struct Player Player;
 struct Player
    {
@@ -6,3 +8,4 @@ struct Player
    unsigned int pos_y;
    };
 
+bool verifyMove(int pos_x, int pos_y);
