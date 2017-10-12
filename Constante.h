@@ -10,5 +10,5 @@ int dimB=20;
 int dimP=20;
 int dimW=20;
 
-char terrainFile1 [] = "C:\\Users\\ELEVE\\Documents\\My_Sokoban\\SoComman_ECE\\terrain_1.txt";
-char saveFile1 [] = "C:\\Users\\ELEVE\\Documents\\My_Sokoban\\SoComman_ECE\\savedFile.txt";
+char terrainFile1 [] = "terrain_1.txt";
+char saveFile1 [] = "savedFile.txt";

@@ -271,15 +271,15 @@ void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
 void saveFile(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
 {
     int i,j;
-    char nameText [] = "C:\\Users\\ELEVE\\Documents\\My_Sokoban\\SoComman_ECE\\savedFile.txt";
+
     char tampon=0;
     FILE* fichier = NULL;
-    fichier = fopen(nameText, "w+");
+    fichier = fopen(saveFile1, "w+");
 
     if (fichier == NULL)
     {
 
-        printf("Impossible d'ouvrir le fichier :  %c.txt",nameText);
+        printf("Impossible d'ouvrir le fichier :  %c.txt",saveFile1);
         exit(0);
     }
     else
