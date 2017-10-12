@@ -7,6 +7,7 @@
 #include "Wall.h"
 #include "Goal.h"
 #include "Constante.h"
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 int main()
 {
@@ -84,12 +85,6 @@ int menu ()
 /////////////////////////////////////////////////////////////////////////////////////////////
 int jouer()
 {
-    int i=0;
-    int j=0;
-    int dimB=20;
-    int dimP=20;
-    int dimW=20;
-
     system("cls");
     int endgame;
 
@@ -99,24 +94,22 @@ int jouer()
     Player *tabPlayer = dynamicAllocPlayer(dimP);
     Wall *tabWall = dynamicAllocWall(dimW);
 
-    // gestion des fichiers
-    char nameText [] = "C:\\Users\\ELEVE\\Documents\\My_Sokoban\\SoComman_ECE\\terrain_1.txt";
-                                                                                              printf("fichier : %s.txt\n\n",nameText);
+    loadfile(terrainFile1 ,matrice);
 
-    loadfile(nameText,matrice);
+    affichageTerrain(matrice);
 
-    for(i=0;i<nbRowsMatrix;i++)
-    {
-        for(j=0;j<nbColsMatrix;j++)
-    {
-        printf("%d",matrice[i][j]);
-    }
-    }
+    saveFile(matrice);
 
+    printf("save ok");
+
+    loadfile(saveFile1, matrice);
+
+    affichageTerrain(matrice);
+     printf("load save ok");
 
     while (endgame !=1)
     {
-        system("cls");
+        //affichageTerrain(matrice);
         endgame = findWin(tabBox,dimB);
     }
 }
@@ -209,36 +202,98 @@ void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix])
 {
     int i=0;
     int j=0;
-    char caractereActuel;
+    bool finfichier=0;
+    char tampon[nbColsMatrix+1];
     FILE* fichier = NULL;
-                                                                                                    printf("avant transcription\n\n");
     fichier = fopen(name, "r+");
     if(fichier == NULL)
     {
-       exit(0);
+        exit(0);
         printf("Impossible d'ouvrir le fichier %c.txt",name);
     }
     else
-    {  printf("transcription en cours...\n\n");
-        do
+    {
+        //  printf("transcription en cours de X= %d ; Y= %d\n\n",nbRowsMatrix,nbColsMatrix);
+
+        for (i=0; i<nbRowsMatrix; i++)
         {
-            i++;
-            do
+            fgets(tampon,(nbColsMatrix*nbRowsMatrix),fichier);
+
+            for (j=0; j<nbColsMatrix; j++)
             {
-                j++;
-                caractereActuel=fgetc(fichier);
-                if (caractereActuel != '\n' || caractereActuel !='EOF')
-                {
-                    matrice[i][j]=caractereActuel;
-                }                                                             printf("%c",caractereActuel);
+                matrice[i][j]=(tampon[j]-48);
+                //printf("%d", matrice[i][j]);
             }
-            while (caractereActuel != '\n' || caractereActuel !='EOF');
-            printf("\n");
-            printf("%c",caractereActuel);
+            //printf("\n");
         }
-        while (caractereActuel != 'EOF');
     }
 
+    //printf(" - fin importation du terrain - \n\n");
+
+    fclose(fichier);
+   // printf(" - fin importation suppretion fichier -\n");
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
+{
+    int i=0;
+    int j=0;
+
+  //  system("cls");
+
+    for(i=0; i<nbRowsMatrix; i++)
+    {
+        for(j=0; j<nbColsMatrix; j++)
+        {
+            switch (matrice[i][j])
+            {
+            case 1 :                           // sol
+                printf("%c",outdoorpict);
+                break;
+            case 2 :                           // murs
+                printf("%c",wallpict);
+                break;
+            case 3 :                           // sol
+                printf("%c",florpict);
+                break;
+            case 4 :                           // perso
+                printf("%c",persopict);
+                break;
+            }
+        }
+        printf("\n");
+    }
+
+}
+
+void saveFile(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
+{
+    int i,j;
+    char nameText [] = "C:\\Users\\ELEVE\\Documents\\My_Sokoban\\SoComman_ECE\\savedFile.txt";
+    char tampon=0;
+    FILE* fichier = NULL;
+    fichier = fopen(nameText, "w+");
+
+    if (fichier == NULL)
+    {
+
+        printf("Impossible d'ouvrir le fichier :  %c.txt",nameText);
+        exit(0);
+    }
+    else
+    {
+        for (i=0; i<nbRowsMatrix; i++)
+        {
+
+            for (j=0; j<nbColsMatrix; j++)
+            {
+                fprintf(fichier,"%d",matrice[i][j]);
 
 
+            } fputc('\n',fichier);
+        }
+fclose(fichier);
+}
 }

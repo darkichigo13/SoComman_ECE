@@ -32,3 +32,4 @@ void affichageTabPlayer (Player * tab, int dim)
     printf("Player posx : %d / Player posy : %d\n",tab[i].pos_x,tab[i].pos_y);
     }
 }
+
