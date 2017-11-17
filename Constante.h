@@ -7,7 +7,7 @@ int outdoorpict=0;
 int persopict=169;
 
 int dimB=20;
-int dimP=20;
+int dimP=1;
 int dimW=20;
 
 char terrainFile1 [] = "terrain_1.txt";

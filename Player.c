@@ -19,6 +19,7 @@ Player * dynamicAllocPlayer (int dim)
     {
         tabPlayer[i].pos_x=0;
         tabPlayer[i].pos_y=0;
+        tabPlayer[i].case_dessous=1;
     }
     return tabPlayer;
 
