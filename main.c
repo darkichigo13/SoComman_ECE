@@ -87,56 +87,52 @@ int jouer()
 
     while (endgame !=1)
     {
-        /*
         while(!kbhit()){
         char key = getchar();
+        bool response;
 
         switch(key){
             case('z'):
-                bool response;
                 response = movePlayer(player, key, tabBox, tabWall); // Déplace le joueur si possible
                 if(response){ // Si le déplacement est possible on réactualise l'affichage
                     affichageTerrain(matrice);
                 }
                 else{ // Si le déplacement est impossible on fait un affichage spécial
-                    affichageImpossibilitéDeplacement();
+                    //affichageImpossibilitéDeplacement();
                 }
                 break;
 
             case('q'):
-                bool response;
                 response = movePlayer(player, key, tabBox, tabWall); // Déplace le joueur si possible
                 if(response){ // Si le déplacement est possible on réactualise l'affichage
                     affichageTerrain(matrice);
                 }
                 else{ // Si le déplacement est impossible on fait un affichage spécial
-                    affichageImpossibilitéDeplacement();
+                    //affichageImpossibilitéDeplacement();
                 }
                 break;
 
             case('s'):
-                bool response;
                 response = movePlayer(player, key, tabBox, tabWall); // Déplace le joueur si possible
                 if(response){ // Si le déplacement est possible on réactualise l'affichage
                     affichageTerrain(matrice);
                 }
                 else{ // Si le déplacement est impossible on fait un affichage spécial
-                    affichageImpossibilitéDeplacement();
+                    //affichageImpossibilitéDeplacement();
                 }
                 break;
 
             case('d'):
-                bool response;
                 response = movePlayer(player, key, tabBox, tabWall); // Déplace le joueur si possible
                 if(response){ // Si le déplacement est possible on réactualise l'affichage
                     affichageTerrain(matrice);
                 }
                 else{ // Si le déplacement est impossible on fait un affichage spécial
-                    affichageImpossibilitéDeplacement();
+                    //affichageImpossibilitéDeplacement();
                 }
                 break;
         }
-    }*/
+    }
         endgame = findWin(tabBox,dimB);
     }
 }
