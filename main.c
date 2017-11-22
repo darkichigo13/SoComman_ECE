@@ -120,8 +120,6 @@ int menuJouer()
     return (choix);
 }
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////
 int jouer(int A)
 {
@@ -156,36 +154,12 @@ int jouer(int A)
         if(!kbhit())
         {
             frappe=getch();
-            printf("kbhit ok : %c\n", frappe);
             switch(frappe)
             {
-            case 'z' :
-                tabPlayer[0].case_dessous = tabPlayer[0].case_cible;
-                tabPlayer[0].case_cible = matrice[(tabPlayer[0].pos_x)-1][tabPlayer[0].pos_y];
-                tabPlayer[0].pos_x =  (tabPlayer[0].pos_x)-1;
-                tabPlayer[0].pos_y =  (tabPlayer[0].pos_y);
-                break;
-            case 's' :
-                tabPlayer[0].case_dessous = tabPlayer[0].case_cible;
-                tabPlayer[0].case_cible = matrice[(tabPlayer[0].pos_x)+1][tabPlayer[0].pos_y];
-                tabPlayer[0].pos_x =  (tabPlayer[0].pos_x)+1;
-                tabPlayer[0].pos_y =  (tabPlayer[0].pos_y);
-                break;
-            case 'q' :
-                tabPlayer[0].case_dessous = tabPlayer[0].case_cible;
-                tabPlayer[0].case_cible = matrice[(tabPlayer[0].pos_x)][(tabPlayer[0].pos_y)-1];
-                tabPlayer[0].pos_x =  (tabPlayer[0].pos_x);
-                tabPlayer[0].pos_y =  (tabPlayer[0].pos_y)-1;
-                break;
-            case 'd' :
-                tabPlayer[0].case_dessous = tabPlayer[0].case_cible;
-                tabPlayer[0].case_cible = matrice[(tabPlayer[0].pos_x)][(tabPlayer[0].pos_y)+1];
-                tabPlayer[0].pos_x =  (tabPlayer[0].pos_x);
-                tabPlayer[0].pos_y =  (tabPlayer[0].pos_y)+1;
-                break;
             case 'p' : saveFile(matrice);
                 break;
             }
+           // implementationMatrice (matrice[nbRowsMatrix][nbColsMatrix],tabBox,tabPlayer,tabWall,dimB,dimP,dimW);
             affichageTerrain(matrice);
         }
         endgame = findWin(tabBox,dimB);
@@ -277,8 +251,16 @@ int jouer(int A)
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+    void CreationAllTab()
+    {
+
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
     void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix])
     {
+        int k = 0;
+        k = methode();
         int i=0;
         int j=0;
         bool finfichier=0;
