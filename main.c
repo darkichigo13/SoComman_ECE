@@ -14,28 +14,6 @@ int main()
 {
     menu();
 
-    /*while(!kbhit()){
-        char key = getchar();
-
-        switch(key){
-            case('z'):
-                printf("%c",key);
-                break;
-
-            case('q'):
-                printf("%c",key);
-                break;
-
-            case('s'):
-                printf("%c",key);
-                break;
-
-            case('d'):
-                printf("%c",key);
-                break;
-        }
-    }*/
-
     return 0;
 }
 
@@ -82,9 +60,11 @@ int menu ()
     return (0);
 }
 
-int menuJouer()
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+int menuJouer ()
 {
-    system("cls");
+     system("cls");
     int choix=0;
 
     printf("                                                                          \n");
@@ -259,8 +239,6 @@ int jouer(int A)
 /////////////////////////////////////////////////////////////////////////////////////////////
     void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix])
     {
-        int k = 0;
-        k = methode();
         int i=0;
         int j=0;
         bool finfichier=0;

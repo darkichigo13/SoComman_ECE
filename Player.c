@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "Box.h"
+#include "Wall.h"
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -35,48 +37,113 @@ void affichageTabPlayer (Player * tab, int dim)
     }
 }
 
-void movePlayer (Player *player, char deplacement){
-    bool response;
+bool movePlayer (Player *player, char deplacement, Box *tabBox, Wall *tabWall){
+    int i; //declare variable i
+    int j; //declare variable j
+
     switch (deplacement){
+
+
+
     case 'z' :
-        response = verifyMove(player->pos_x , (player->pos_y - 1));
-        if (response){
-            player->pos_y = player->pos_y - 1;
+        for(i=0 ; i < sizeof(tabBox) ; ++i){ // Parcours listes des Boxs
+            if(player->pos_y - 1 == tabBox[i].pos_y){ // Vérifie que la case ou on veut se déplacer n'est pas une box
+                for(i=0 ; i < sizeof(tabWall) ; ++i){ // Si c'est une box on parcours la liste des murs
+                    if(tabBox[i].pos_y - 1 == tabWall[i].pos_y){ // Vérifie que la case ou on veut déplacer la caisse n'est pas un mur
+                        printf("Impossible de se déplacer"); // Si c'est un mur on affiche un message
+                        return false; // Et on renvoie false
+                    }
+                }
+                tabBox[i].pos_y = tabBox[i].pos_y - 1; // Si la case à côté est vide on déplace la caisse de deux cases
+                player->pos_y = player->pos_y - 2; // Puis on se déplace d'une case
+                return true; // Et on renvoie true
+            }
         }
-        else if (!response){
-            //TO-DO return error
+        for(i=0 ; i < sizeof(tabWall) ; ++i){ // Si la case à côté n'est pas une caisse
+            if(player->pos_y - 1 == tabWall[i].pos_y){ // On vérifie que ce n'est pas un mur
+                printf("Impossible de se déplacer"); // Si c'est un mur on affiche un message
+                return false; // Et on renvoie false
+            }
         }
+        player->pos_y = player->pos_y - 1; // Si la case à côté n'est ni une caisse, ni un mur, on se déplace
+        return true; // Et on renvoie true
+
+
 
     case 'q' :
-        response = verifyMove((player->pos_x - 1), player->pos_y);
-        if (response){
-            player->pos_x = player->pos_x - 1;
+        for(i=0 ; i < sizeof(tabBox) ; ++i){ // Parcours listes des Boxs
+            if(player->pos_x - 1 == tabBox[i].pos_x){ // Vérifie que la case ou on veut se déplacer n'est pas une box
+                for(i=0 ; i < sizeof(tabWall) ; ++i){ // Si c'est une box on parcours la liste des murs
+                    if(tabBox[i].pos_x - 1 == tabWall[i].pos_x){ // Vérifie que la case ou on veut déplacer la caisse n'est pas un mur
+                        printf("Impossible de se déplacer"); // Si c'est un mur on affiche un message
+                        return false; // Et on renvoie false
+                    }
+                }
+                tabBox[i].pos_x = tabBox[i].pos_x - 1; // Si la case à côté est vide on déplace la caisse de deux cases
+                player->pos_x = player->pos_x - 2; // Puis on se déplace d'une case
+                return true; // Et on renvoie true
+            }
         }
-        else if (!response){
-            //TO-DO return error
+        for(i=0 ; i < sizeof(tabWall) ; ++i){ // Si la case à côté n'est pas une caisse
+            if(player->pos_x - 1 == tabWall[i].pos_x){ // On vérifie que ce n'est pas un mur
+                printf("Impossible de se déplacer"); // Si c'est un mur on affiche un message
+                return false; // Et on renvoie false
+            }
         }
+        player->pos_x = player->pos_x - 1; // Si la case à côté n'est ni une caisse, ni un mur, on se déplace
+        return true; // Et on renvoie true
+
+
 
     case 's' :
-        response = verifyMove(player->pos_x, (player->pos_y + 1));
-        if (response){
-            player->pos_y = player->pos_y + 1;
+        for(i=0 ; i < sizeof(tabBox) ; ++i){ // Parcours listes des Boxs
+            if(player->pos_y + 1 == tabBox[i].pos_y){ // Vérifie que la case ou on veut se déplacer n'est pas une box
+                for(i=0 ; i < sizeof(tabWall) ; ++i){ // Si c'est une box on parcours la liste des murs
+                    if(tabBox[i].pos_y + 1 == tabWall[i].pos_y){ // Vérifie que la case ou on veut déplacer la caisse n'est pas un mur
+                        printf("Impossible de se déplacer"); // Si c'est un mur on affiche un message
+                        return false; // Et on renvoie false
+                    }
+                }
+                tabBox[i].pos_y = tabBox[i].pos_y + 1; // Si la case à côté est vide on déplace la caisse de deux cases
+                player->pos_y = player->pos_y + 2; // Puis on se déplace d'une case
+                return true; // Et on renvoie true
+            }
         }
-        else if (!response){
-            //TO-DO return error
+        for(i=0 ; i < sizeof(tabWall) ; ++i){ // Si la case à côté n'est pas une caisse
+            if(player->pos_y + 1 == tabWall[i].pos_y){ // On vérifie que ce n'est pas un mur
+                printf("Impossible de se déplacer"); // Si c'est un mur on affiche un message
+                return false; // Et on renvoie false
+            }
         }
+        player->pos_y = player->pos_y + 1; // Si la case à côté n'est ni une caisse, ni un mur, on se déplace
+        return true; // Et on renvoie true
+
+
 
     case 'd' :
-        response = verifyMove((player->pos_x + 1), player->pos_y);
-        if (response){
-            player->pos_x = player->pos_x + 1;
+        for(i=0 ; i < sizeof(tabBox) ; ++i){ // Parcours listes des Boxs
+            if(player->pos_x + 1 == tabBox[i].pos_x){ // Vérifie que la case ou on veut se déplacer n'est pas une box
+                for(i=0 ; i < sizeof(tabWall) ; ++i){ // Si c'est une box on parcours la liste des murs
+                    if(tabBox[i].pos_x + 1 == tabWall[i].pos_x){ // Vérifie que la case ou on veut déplacer la caisse n'est pas un mur
+                        printf("Impossible de se déplacer"); // Si c'est un mur on affiche un message
+                        return false; // Et on renvoie false
+                    }
+                }
+                tabBox[i].pos_x = tabBox[i].pos_x + 1; // Si la case à côté est vide on déplace la caisse de deux cases
+                player->pos_x = player->pos_x + 2; // Puis on se déplace d'une case
+                return true; // Et on renvoie true
+            }
         }
-        else if (!response){
-            //TO-DO return error
+        for(i=0 ; i < sizeof(tabWall) ; ++i){ // Si la case à côté n'est pas une caisse
+            if(player->pos_x + 1 == tabWall[i].pos_x){ // On vérifie que ce n'est pas un mur
+                printf("Impossible de se déplacer"); // Si c'est un mur on affiche un message
+                return false; // Et on renvoie false
+            }
         }
-    }
-}
+        player->pos_x = player->pos_x + 1; // Si la case à côté n'est ni une caisse, ni un mur, on se déplace
+        return true; // Et on renvoie true
 
-bool verifyMove (int pos_x, int pos_y){
-    //TO-DO
-    return (1);
+
+
+    }
 }
