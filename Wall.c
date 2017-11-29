@@ -4,7 +4,6 @@
 
 Wall * dynamicAllocWall (int dimW)
 {
-    printf("dimW = %d \n", dimW);
     Wall *tabWall= NULL;
     int i = 0;
     int a = 0;
@@ -23,19 +22,18 @@ Wall * dynamicAllocWall (int dimW)
         tabWall[i].pos_y=2;
         a=a+1;
     }
-    printf("dim de tab %d", a);
 
     return(tabWall);
 
 }
 
-void affichageTabWall(Wall * tab, int dim)
+/*void affichageTabWall(Wall * tab, int dim)
 {
     int i=0;
 
     for (i=0;i<dim;i++)
     {
-    printf("Wall posx : %d / Wall posy : %d\n",tab[i].pos_x,tab[i].pos_y);
+        printf("Wall posx : %d / Wall posy : %d\n", tab[i].pos_x,tab[i].pos_y);
     }
-}
+}*/
 

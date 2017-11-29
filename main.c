@@ -167,7 +167,8 @@ int jouer(int A)
     printf("nombre de box  : %d \n", dimB);
     printf("nombre de wall : %d \n \n", dimW);
 
-    // saveFile(matrice);
+
+    // saveFile(matzrice);
 
     while (endgame !=1)
     {
@@ -177,36 +178,23 @@ int jouer(int A)
             switch(key){
 
             case 'z' :
-                //printf("coordonnées de départ player : %d , %d \n", tabPlayer[0].pos_x, tabPlayer[0].pos_y);
-                //printf("touche de déplacement : %c \n", key);
-                printf("\n");
-                printf("coordonnées avant rentre dans méthode de box 2 : %d, %d ", tabBox[2].pos_x, tabBox[2].pos_y);
                 movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
-                //printf("coordonnées final player : %d , %d \n", tabPlayer[0].pos_x, tabPlayer[0].pos_y);
                 implementationMatrice(matrice, tabBox, tabPlayer, dimB, dimP);
-                /*printf("\n");
-                printf("coordonnées box 0 : %d, %d ", tabBox[0].pos_x, tabBox[0].pos_y);
-                printf("\n");
-                printf("coordonnées box 1 : %d, %d ", tabBox[1].pos_x, tabBox[1].pos_y);
-                printf("\n");
-                printf("coordonnées box 2 : %d, %d ", tabBox[2].pos_x, tabBox[2].pos_y);
-                printf("\n");
-                printf("coordonnées box 3 : %d, %d ", tabBox[3].pos_x, tabBox[3].pos_y);*/
                 break;
 
             case 'q' :
                 movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
-                //implementationMatrice(matrice, tabBox, tabPlayer, dimB, dimP);
+                implementationMatrice(matrice, tabBox, tabPlayer, dimB, dimP);
                 break;
 
             case 's' :
                 movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
-                //implementationMatrice(matrice, tabBox, tabPlayer, dimB, dimP);
+                implementationMatrice(matrice, tabBox, tabPlayer, dimB, dimP);
                 break;
 
             case 'd' :
                 movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
-                //implementationMatrice(matrice, tabBox, tabPlayer, dimB, dimP);
+                implementationMatrice(matrice, tabBox, tabPlayer, dimB, dimP);
                 break;
 
             case 'p' :
