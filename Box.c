@@ -4,11 +4,12 @@
 
 Box * dynamicAllocBox (int dim)
 {
-    Box *tabBox= NULL;
+    printf("dimB = %d \n", dim);
+    Box *tabBox = NULL;
     int i = 0;
 
 
-    tabBox = malloc (dim * sizeof (Box));
+    tabBox = malloc(dim * sizeof(Box));
     if (tabBox == NULL) // si l'allocation a échoué
     {
         exit(0); // on arrête immédiatement le programme

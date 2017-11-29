@@ -2,25 +2,30 @@
 
 #include <stdlib.h>
 
-Wall * dynamicAllocWall (int dim)
+Wall * dynamicAllocWall (int dimW)
 {
+    printf("dimW = %d \n", dimW);
     Wall *tabWall= NULL;
     int i = 0;
+    int a = 0;
 
+    tabWall = malloc(dimW * sizeof(Wall));
 
-    tabWall = malloc (dim * sizeof (Wall));
     if (tabWall == NULL) // si l'allocation a échoué
     {
         exit(0); // on arrête immédiatement le programme
     }
 
     // initialisation struct Wall :
-    for (i=0; i<dim; i++)
+    for (i=0; i<dimW; i++)
     {
         tabWall[i].pos_x=2;
         tabWall[i].pos_y=2;
+        a=a+1;
     }
-    return tabWall;
+    printf("dim de tab %d", a);
+
+    return(tabWall);
 
 }
 
