@@ -142,6 +142,7 @@ int jouer(int A)
             if(matrice[i][j] == 2){
                 tabWall[w].pos_x = i;
                 tabWall[w].pos_y = j;
+                //printf("tabWall[%d].pos_x : %d ,tabWall[%d].pos_y : %d \n",w , tabWall[w].pos_x, w , tabWall[w].pos_y);
                 w = w + 1;
                 continue;
             }
@@ -162,11 +163,12 @@ int jouer(int A)
         }
     }
 
+    printf("\n");
+
     affichageTerrain(matrice);
 
     printf("nombre de box  : %d \n", dimB);
     printf("nombre de wall : %d \n \n", dimW);
-
 
     // saveFile(matzrice);
 
@@ -178,6 +180,10 @@ int jouer(int A)
             switch(key){
 
             case 'z' :
+                printf("\n");
+                for(j=0 ; j < dimW ; ++j){
+                    printf("tabWall[%d].pos_x : %d ,tabWall[%d].pos_y : %d \n",j , tabWall[j].pos_x, j , tabWall[j].pos_y);
+                }
                 movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
                 implementationMatrice(matrice, tabBox, tabPlayer, dimB, dimP);
                 break;

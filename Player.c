@@ -42,6 +42,9 @@ bool movePlayer (Player *tabPlayer, char deplacement, Box *tabBox, Wall *tabWall
     int i; //declare variable i
     int j; //declare variable j
 
+    for(j=0 ; j < dimW ; ++j){
+        printf("tabWall[%d].pos_x : %d ,tabWall[%d].pos_y : %d \n",j , tabWall[j].pos_x, j , tabWall[j].pos_y);
+    }
     printf("\n");
     printf("taille dimW : %d ", dimW);
 
@@ -51,7 +54,8 @@ bool movePlayer (Player *tabPlayer, char deplacement, Box *tabBox, Wall *tabWall
         for(i=0 ; i < dimB ; ++i){ // Parcours listes des Boxs
             if(tabPlayer[0].pos_x - 1 == tabBox[i].pos_x && tabPlayer[0].pos_y == tabBox[i].pos_y){ // Vérifie que la case ou on veut se déplacer n'est pas une box
                 for(j=0 ; j < dimW ; ++j){ // Si c'est une box on parcours la liste des murs
-                    if(tabBox[i].pos_x - 1 == tabWall[j].pos_x && tabBox[i].pos_y == tabWall[j].pos_y){ // Vérifie que la case ou on veut déplacer la caisse n'est pas un mur
+                    if(tabBox[i].pos_x - 1 == tabWall[j].pos_x && tabBox[i].pos_y == tabWall[j].pos_y){
+                        printf("Impossible de se déplacer \n");// Vérifie que la case ou on veut déplacer la caisse n'est pas un mur
                         return false; // Et on renvoie false
                     }
                 }
