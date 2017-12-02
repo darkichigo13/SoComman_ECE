@@ -137,6 +137,7 @@ int jouer(int A)
     int b = 0;
     int p = 0;
     int g = 0;
+    int cpt = 0;
 
     for(i=0 ; i<nbRowsMatrix ; i++)
     {
@@ -164,8 +165,8 @@ int jouer(int A)
             }
 
             if(matrice[i][j] == 6){
-                tabGoal[p].pos_x=i;
-                tabGoal[p].pos_y=j;
+                tabGoal[g].pos_x=i;
+                tabGoal[g].pos_y=j;
                 g = g + 1;
                 continue;
             }
@@ -175,8 +176,6 @@ int jouer(int A)
     affichageTerrain(matrice);
 
     // saveFile(matzrice);
-
-    int cpt = 0;
 
     while (endgame !=1)
     {
@@ -216,8 +215,6 @@ int jouer(int A)
 
 //        endgame = findWin(tabBox,pdimB);
     }
-
-    printf("sortie du jeu");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -304,6 +301,12 @@ void implementationMatrice (unsigned int* matrice[nbRowsMatrix][nbColsMatrix],Bo
 
         }
     }
+
+    for (i=0; i<dimG; i++)            // player implementation
+    {
+        matrice[tabGoal[i].pos_x][tabGoal[i].pos_y] = 6;
+    }
+
     for (i=0; i<dimB; i++)           // box implementation
     {
         matrice[tabBox[i].pos_x][tabBox[i].pos_y] = 3;
@@ -314,10 +317,6 @@ void implementationMatrice (unsigned int* matrice[nbRowsMatrix][nbColsMatrix],Bo
         matrice[tabPlayer[i].pos_x][tabPlayer[i].pos_y] = 4;
     }
 
-    for (i=0; i<dimG; i++)            // player implementation
-    {
-        matrice[tabGoal[i].pos_x][tabGoal[i].pos_y] = 6;
-    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
