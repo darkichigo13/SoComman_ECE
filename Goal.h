@@ -1,3 +1,4 @@
+typedef struct Goal Goal;
 struct Goal
    {
    char id[20];

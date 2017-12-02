@@ -109,6 +109,7 @@ int jouer(int A)
     int dimB=0;
     int dimP=0;
     int dimW=0;
+    int dimG=0;
 
     char key;
     int temp;
@@ -118,7 +119,7 @@ int jouer(int A)
     if(A == 1)
     {
         loadfile(terrainFile1,matrice);
-        recupDimTabs(matrice, &dimB, &dimP, &dimW);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
     }
     if(A == 2)
     {
@@ -126,14 +127,16 @@ int jouer(int A)
     }
 
     Box *tabBox = dynamicAllocBox(dimB);
-    Player *tabWall = dynamicAllocWall(dimW);
+    Wall *tabWall = dynamicAllocWall(dimW);
     Player *tabPlayer = dynamicAllocPlayer(dimP);
+    Goal *tabGoal = dynamicAllocGoal(dimG);
 
     int i;
     int j;
     int w = 0;
     int b = 0;
     int p = 0;
+    int g = 0;
 
     for(i=0 ; i<nbRowsMatrix ; i++)
     {
@@ -142,7 +145,6 @@ int jouer(int A)
             if(matrice[i][j] == 2){
                 tabWall[w].pos_x = i;
                 tabWall[w].pos_y = j;
-                //printf("tabWall[%d].pos_x : %d ,tabWall[%d].pos_y : %d \n",w , tabWall[w].pos_x, w , tabWall[w].pos_y);
                 w = w + 1;
                 continue;
             }
@@ -160,17 +162,21 @@ int jouer(int A)
                 p = p + 1;
                 continue;
             }
+
+            if(matrice[i][j] == 6){
+                tabGoal[p].pos_x=i;
+                tabGoal[p].pos_y=j;
+                g = g + 1;
+                continue;
+            }
         }
     }
 
-    printf("\n");
-
     affichageTerrain(matrice);
 
-    printf("nombre de box  : %d \n", dimB);
-    printf("nombre de wall : %d \n \n", dimW);
-
     // saveFile(matzrice);
+
+    int cpt = 0;
 
     while (endgame !=1)
     {
@@ -180,27 +186,23 @@ int jouer(int A)
             switch(key){
 
             case 'z' :
-                printf("\n");
-                for(j=0 ; j < dimW ; ++j){
-                    printf("tabWall[%d].pos_x : %d ,tabWall[%d].pos_y : %d \n",j , tabWall[j].pos_x, j , tabWall[j].pos_y);
-                }
                 movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
-                implementationMatrice(matrice, tabBox, tabPlayer, dimB, dimP);
+                implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
                 break;
 
             case 'q' :
                 movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
-                implementationMatrice(matrice, tabBox, tabPlayer, dimB, dimP);
+                implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
                 break;
 
             case 's' :
                 movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
-                implementationMatrice(matrice, tabBox, tabPlayer, dimB, dimP);
+                implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
                 break;
 
             case 'd' :
                 movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
-                implementationMatrice(matrice, tabBox, tabPlayer, dimB, dimP);
+                implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
                 break;
 
             case 'p' :
@@ -208,9 +210,14 @@ int jouer(int A)
                 break;
             }
             affichageTerrain(matrice);
+            printf("%d", cpt);
+            cpt=cpt+1;
         }
+
 //        endgame = findWin(tabBox,pdimB);
     }
+
+    printf("sortie du jeu");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -276,7 +283,7 @@ int option ()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-void implementationMatrice (unsigned int* matrice[nbRowsMatrix][nbColsMatrix],Box *tabBox,Player *tabPlayer, int dimB,int dimP)
+void implementationMatrice (unsigned int* matrice[nbRowsMatrix][nbColsMatrix],Box *tabBox,Player *tabPlayer, Goal *tabGoal, int dimB,int dimP, int dimG)
 {
     int i;
     int j;
@@ -294,6 +301,7 @@ void implementationMatrice (unsigned int* matrice[nbRowsMatrix][nbColsMatrix],Bo
                 matrice[i][j] = 1;
                 continue;
             }
+
         }
     }
     for (i=0; i<dimB; i++)           // box implementation
@@ -305,10 +313,15 @@ void implementationMatrice (unsigned int* matrice[nbRowsMatrix][nbColsMatrix],Bo
     {
         matrice[tabPlayer[i].pos_x][tabPlayer[i].pos_y] = 4;
     }
+
+    for (i=0; i<dimG; i++)            // player implementation
+    {
+        matrice[tabGoal[i].pos_x][tabGoal[i].pos_y] = 6;
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-void recupDimTabs( unsigned int matrice[nbRowsMatrix][nbColsMatrix], int* dimB, int* dimP, int* dimW)
+void recupDimTabs( unsigned int matrice[nbRowsMatrix][nbColsMatrix], int* dimB, int* dimP, int* dimW, int* dimG)
 {
     int i=0;
     int j=0;
@@ -329,6 +342,11 @@ void recupDimTabs( unsigned int matrice[nbRowsMatrix][nbColsMatrix], int* dimB, 
 
             if(matrice[i][j] == 4){
                 *dimP = *dimP + 1;
+                continue;
+            }
+
+            if(matrice[i][j] == 6){
+                *dimG = *dimG + 1;
                 continue;
             }
         }
@@ -394,11 +412,13 @@ void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
             case 4 :                           // perso
                 printf("%c",persopict);
                 break;
+            case 6 :                           // goal
+                printf("%c",goalpict);
+                break;
             }
         }
         printf("\n");
     }
-
 }
 
 void saveFile(unsigned int matrice[nbRowsMatrix][nbColsMatrix])

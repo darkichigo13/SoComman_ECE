@@ -5,6 +5,7 @@ int wallpict=178;
 int florpict=177;
 int outdoorpict=0;
 int persopict=169;
+int goalpict=170;
 //
 //int dimB=20;
 //int dimP=1;
