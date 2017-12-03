@@ -208,23 +208,42 @@ int jouer(int A)
                 saveFile(matrice);
                 break;
             }
+
+            endgame = findWin(tabBox, tabGoal, dimB, dimG);
             affichageTerrain(matrice);
+            printf("\n");
             printf("%d", cpt);
             cpt=cpt+1;
         }
-
-//        endgame = findWin(tabBox,pdimB);
     }
+    system("cls");
+    printf("YOU WIN");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-int findWin(Box * tab, int dim)
+int findWin(Box * tabBox, Goal * tabGoal, int dimB, int dimG)
 {
-    int i =0;
-    int compter=0;
-    for (i=0; i<dim; i++)
+    int i = 0;
+    int j = 0;
+    int tmp = 0;
+
+    for (i=0; i<dimB; i++)
     {
-        if (tab[i].win == 0) compter++;
+        for (j=0; j<dimG; j++){
+            if(tabBox[i].pos_x == tabGoal[j].pos_x && tabBox[i].pos_y == tabGoal[j].pos_y)
+            {
+                tabBox[i].win = 1;
+                tmp = tmp + 1;
+            } else if(tmp == 0) {
+                tabBox[i].win = 0;
+            }
+        }
+    }
+
+    int compter=0;
+    for (i=0; i<dimB; i++)
+    {
+        if (tabBox[i].win == 0) compter++;
     }
     if (compter == 0)
     {
