@@ -42,10 +42,10 @@ int menu ()
         switch (choix)
         {
         case 1 :
-            choix = menuJouer();
+            menuJouer();
             break;
         case 2 :
-            choix = option();
+            option();
             break;
         case 3 : //  Credit
             break;
@@ -83,10 +83,10 @@ int menuJouer ()
         switch (choix)
         {
         case 1 :
-            choix = jouer(1);
+            jouer(1,0);
             break;
         case 2 :
-            choix = jouer(2);
+            jouer(2);
             break;
         case 3 :
             choix = 101;
@@ -100,7 +100,7 @@ int menuJouer ()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-int jouer(int A)
+int jouer(int A, int cpt)
 {
     /////////////// delaration
     int endgame;
@@ -147,7 +147,6 @@ int jouer(int A)
     int b = 0;
     int p = 0;
     int g = 0;
-    int cpt = 0;
 
     for(i=0 ; i<nbRowsMatrix ; i++)
     {
@@ -215,26 +214,29 @@ int jouer(int A)
                 break;
 
             case 'k' :
-                jouer(A);
+                jouer(A,0);
                 break;
 
             case 'p' :
                 saveFile(matrice);
                 break;
-            }
 
+            }
             endgame = findWin(tabBox, tabGoal, dimB, dimG);
+            if(endgame != 1)
+            {
+                cpt=cpt+1;
+            }
             affichageTerrain(matrice, cpt);
-            cpt=cpt+1;
         }
     }
 
     if( A == 1){
-        jouer(4);
+        jouer(4,cpt);
     } else if( A == 4){
-        jouer(5);
+        jouer(5,cpt);
     }
-    else{
+    else if(A == 5){
         system("cls");
         printf("                                                                          \n");
         printf("                                                                          \n");
@@ -250,8 +252,16 @@ int jouer(int A)
         printf("     +#+    +#+    +#+ +#+    +#+       +#+ +#+#+ +#+     +#+     +#+  +#+#+#  \n");
         printf("     #+#    #+#    #+# #+#    #+#        #+#+# #+#+#      #+#     #+#   #+#+#  \n");
         printf("     ###     ########   ########          ###   ###   ########### ###    ####  \n");
+        printf("                                                                          \n");
+        printf("                                                                          \n");
+        printf("                               Score : %d                                 \n\n", cpt);
 
     }
+    saveScore(cpt);
+
+    Sleep(10000);
+
+    menu();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -526,4 +536,54 @@ void saveFile(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
         }
         fclose(fichier);
     }
+}
+
+void saveScore(int cpt){
+    int previous_cpt;
+    previous_cpt = loadScore();
+    if(previous_cpt <= cpt){
+        printf("\n");
+        printf("You not realize the best score (%d), try again !", previous_cpt);
+    }
+
+    else if(previous_cpt > cpt){
+    char tampon=0;
+    FILE* fichier = NULL;
+    fichier = fopen(savedScore, "w+");
+
+    if (fichier == NULL)
+    {
+        printf("Impossible d'ouvrir le fichier :  %c.txt",savedScore);
+        exit(0);
+    }
+    else
+    {
+        fprintf(fichier,"%d",cpt);
+        printf("\n");
+        printf("                            NEW BEST RECORD !!! \n\n");
+        printf("                         previous best record : %d\n", previous_cpt);
+        printf("                            new best record : %d", cpt);
+    }
+    fclose(fichier);
+    }
+}
+
+int loadScore()
+{
+    int i, cpt;
+    char tampon=0;
+    FILE* fichier = NULL;
+    fichier = fopen(savedScore, "r");
+    if(fichier == NULL)
+    {
+        printf("Impossible d'ouvrir le fichier %c", savedScore);
+        exit(0);
+    }
+    else
+    {
+        fscanf(fichier, "%d", &cpt);
+    }
+    fclose(fichier);
+
+    return cpt;
 }
