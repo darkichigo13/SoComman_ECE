@@ -11,11 +11,14 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="C:/Program Files (x86)/CodeBlocks/MinGW/bin/alleg44.dll" />
+					<Add library="C:/Program Files (x86)/CodeBlocks/MinGW/lib/liballeg44.dll.a" />
 				</Linker>
 			</Target>
 		</Build>

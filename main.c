@@ -15,7 +15,7 @@
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+
 int main()
 {
 
@@ -25,7 +25,6 @@ int main()
 }
 END_OF_MAIN();
 
-/////////////////////////////////////////////////////////////////////////////////////////////
 int menu ()
 {
     system("cls");
@@ -55,18 +54,19 @@ int menu ()
         case 2 :
             option();
             break;
-        case 3 : system("cls");
-        printf("                                                                          \n");
-        printf("                                                                          \n");
-        printf("                                                                          \n");
-        printf("                          -       SOKOBAN       -                         \n");
-        printf("                                                                          \n");
-        printf("                                                                          \n");
-        printf("                           SANSHEZ PALMA DANIEL                         \n\n");
-        printf("                              AMELINEAU LOUIS                           \n\n");
-        printf("                                                                          \n");
-        printf("                                                                          \n");
-                Sleep(10000);
+        case 3 :
+            system("cls");
+            printf("                                                                          \n");
+            printf("                                                                          \n");
+            printf("                                                                          \n");
+            printf("                          -       SOKOBAN       -                         \n");
+            printf("                                                                          \n");
+            printf("                                                                          \n");
+            printf("                           SANSHEZ PALMA DANIEL                         \n\n");
+            printf("                              AMELINEAU LOUIS                           \n\n");
+            printf("                                                                          \n");
+            printf("                                                                          \n");
+            Sleep(10000);
             break;
         case 4 :
             exit(EXIT_SUCCESS);
@@ -79,7 +79,6 @@ int menu ()
     return (0);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
 int menuJouer ()
 {
     system("cls");
@@ -133,7 +132,6 @@ int menuJouer ()
     return (choix);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
 int jouer(int A, int cpt)
 {
     /////////////// delaration
@@ -313,7 +311,7 @@ int jouer(int A, int cpt)
 
 void prejouerALLEGRO(int A,int cpt)
 {
-     srand(time(NULL));
+    srand(time(NULL));
     allegro_init();                      // initialisaiton d'allegro
     install_keyboard();
 
@@ -326,7 +324,7 @@ void prejouerALLEGRO(int A,int cpt)
     }
     jouerALLEGRO(A,cpt);
 }
-/////////////////////////////////////////////////////////////////////////////////////////////
+
 int jouerALLEGRO(int A,int cpt)
 {
     int endgame;
@@ -481,11 +479,11 @@ int jouerALLEGRO(int A,int cpt)
                 saveFile(matrice);
                 break;
             case 'm' :
-                 destroy_bitmap(victoire);
-                 for(i=0; i<NIMAGE; i++)
-                 {
-                     destroy_bitmap(tabBitmap[i]);
-                 }
+                destroy_bitmap(victoire);
+                for(i=0; i<NIMAGE; i++)
+                {
+                    destroy_bitmap(tabBitmap[i]);
+                }
                 allegro_exit();
                 menu();
 
@@ -511,19 +509,18 @@ int jouerALLEGRO(int A,int cpt)
     {
         system("cls");
 
-    clear_bitmap(screen);
-    draw_sprite(screen,victoire,0,0);
-    saveScore(cpt);
-    Sleep(10000);
+        clear_bitmap(screen);
+        draw_sprite(screen,victoire,0,0);
+        saveScore(cpt);
+        Sleep(10000);
 
-    allegro_exit();
+        allegro_exit();
 
     }
     menu();
 
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////
 int findWin(Box * tabBox, Goal * tabGoal, int dimB, int dimG)
 {
     int i = 0;
@@ -562,7 +559,6 @@ int findWin(Box * tabBox, Goal * tabGoal, int dimB, int dimG)
     return (compter);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
 int option ()
 {
     int choix=0;
@@ -580,7 +576,6 @@ int option ()
         printf("                                                                        \n\n");
         printf("                                1. Affichage console     \n\n");
         printf("                                2. Affichage Allegro    \n\n");
-        printf("                                3. Musique On/Off    \n\n");
         printf("                                4. Retour    \n\n");
 
         scanf("%d",&choix);
@@ -608,7 +603,6 @@ int option ()
     return(choix);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
 void implementationMatrice (unsigned int* matrice[nbRowsMatrix][nbColsMatrix],Box *tabBox,Player *tabPlayer, Goal *tabGoal, int dimB,int dimP, int dimG)
 {
     int i;
@@ -650,7 +644,6 @@ void implementationMatrice (unsigned int* matrice[nbRowsMatrix][nbColsMatrix],Bo
 
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
 void recupDimTabs( unsigned int matrice[nbRowsMatrix][nbColsMatrix], int* dimB, int* dimP, int* dimW, int* dimG)
 {
     int i=0;
@@ -689,7 +682,6 @@ void recupDimTabs( unsigned int matrice[nbRowsMatrix][nbColsMatrix], int* dimB, 
     return 0;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
 void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix], int * pdimB, int * pdimP, int * pdimW)
 {
     int i=0;
@@ -719,7 +711,6 @@ void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix], in
     fclose(fichier);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
 void affichageTerrainALLEGRO(unsigned int matrice[nbRowsMatrix][nbColsMatrix],BITMAP **tabBitmap, BITMAP *buffer,Player *tabPlayer,int cpt)
 {
     int i=0;
@@ -768,7 +759,6 @@ void affichageTerrainALLEGRO(unsigned int matrice[nbRowsMatrix][nbColsMatrix],BI
     clear_bitmap(buffer);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
 void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix],int cpt)
 {
     int i=0;
@@ -798,44 +788,43 @@ void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix],int cpt)
                 printf("%c",goalpict);
                 break;
             }
-              }
-    if(i == 2)
-    {
-        printf("        -       SOKOBAN       -");
+        }
+        if(i == 2)
+        {
+            printf("        -       SOKOBAN       -");
+        }
+        if(i == 5)
+        {
+            printf("               Moves : %d", cpt);
+        }
+        else if(i == 8)
+        {
+            printf("                 Press :");
+        }
+        else if(i == 10)
+        {
+            printf("                   z");
+        }
+        else if(i == 11)
+        {
+            printf("                 q + d");
+        }
+        else if(i == 12)
+        {
+            printf("                   s");
+        }
+        else if(i == 14)
+        {
+            printf("                For move");
+        }
+        else if(i == 17)
+        {
+            printf("     press k to restart and m to leave");
+        }
+        printf("\n");
     }
-    if(i == 5)
-    {
-        printf("               Moves : %d", cpt);
-    }
-    else if(i == 8)
-    {
-        printf("                 Press :");
-    }
-    else if(i == 10)
-    {
-        printf("                   z");
-    }
-    else if(i == 11)
-    {
-        printf("                 q + d");
-    }
-    else if(i == 12)
-    {
-        printf("                   s");
-    }
-    else if(i == 14)
-    {
-        printf("                For move");
-    }
-    else if(i == 17)
-    {
-        printf("     press k to restart and m to leave");
-    }
-    printf("\n");
-  }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
 void saveFile(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
 {
     int i,j;
