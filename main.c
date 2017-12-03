@@ -125,6 +125,16 @@ int jouer(int A)
     {
         loadfile(saveFile1,matrice);
     }
+    if(A == 4)
+    {
+        loadfile(terrainFile2,matrice);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
+    }
+    if(A == 5)
+    {
+        loadfile(terrainFile3,matrice);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
+    }
 
     Box *tabBox = dynamicAllocBox(dimB);
     Wall *tabWall = dynamicAllocWall(dimW);
@@ -173,7 +183,7 @@ int jouer(int A)
         }
     }
 
-    affichageTerrain(matrice);
+    affichageTerrain(matrice, cpt);
 
     // saveFile(matzrice);
 
@@ -204,20 +214,44 @@ int jouer(int A)
                 implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
                 break;
 
+            case 'k' :
+                jouer(A);
+                break;
+
             case 'p' :
                 saveFile(matrice);
                 break;
             }
 
             endgame = findWin(tabBox, tabGoal, dimB, dimG);
-            affichageTerrain(matrice);
-            printf("\n");
-            printf("%d", cpt);
+            affichageTerrain(matrice, cpt);
             cpt=cpt+1;
         }
     }
-    system("cls");
-    printf("YOU WIN");
+
+    if( A == 1){
+        jouer(4);
+    } else if( A == 4){
+        jouer(5);
+    }
+    else{
+        system("cls");
+        printf("                                                                          \n");
+        printf("                                                                          \n");
+        printf("                                                                          \n");
+        printf("                          -       SOKOBAN       -                         \n");
+        printf("                                                                          \n");
+        printf("                                                                          \n");
+        printf("                                                                        \n\n");
+        printf("  :::   :::  ::::::::  :::    :::       :::       ::: ::::::::::: ::::    :::  \n");
+        printf("  :+:   :+: :+:    :+: :+:    :+:       :+:       :+:     :+:     :+:+:   :+:  \n");
+        printf("   +:+ +:+  +:+    +:+ +:+    +:+       +:+       +:+     +:+     :+:+:+  +:+  \n");
+        printf("    +#++:   +#+    +:+ +#+    +:+       +#+  +:+  +#+     +#+     +#+ +:+ +#+  \n");
+        printf("     +#+    +#+    +#+ +#+    +#+       +#+ +#+#+ +#+     +#+     +#+  +#+#+#  \n");
+        printf("     #+#    #+#    #+# #+#    #+#        #+#+# #+#+#      #+#     #+#   #+#+#  \n");
+        printf("     ###     ########   ########          ###   ###   ########### ###    ####  \n");
+
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -405,7 +439,7 @@ void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix], in
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
+void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix],int cpt)
 {
     int i=0;
     int j=0;
@@ -434,6 +468,30 @@ void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
                 printf("%c",goalpict);
                 break;
             }
+        }
+        if(i == 2){
+        printf("        -       SOKOBAN       -");
+        }
+        if(i == 5){
+        printf("               Moves : %d", cpt);
+        }
+        else if(i == 8){
+        printf("                 Press :");
+        }
+        else if(i == 10){
+        printf("                   z");
+        }
+        else if(i == 11){
+        printf("                 q + d");
+        }
+        else if(i == 12){
+        printf("                   s");
+        }
+        else if(i == 14){
+        printf("                For move");
+        }
+        else if(i == 17){
+        printf("     press k to restart and m to leave");
         }
         printf("\n");
     }
