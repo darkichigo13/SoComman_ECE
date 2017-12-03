@@ -1,5 +1,6 @@
 #include "Wall.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 
 Wall * dynamicAllocWall (int dimW)

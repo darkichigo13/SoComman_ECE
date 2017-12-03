@@ -8,6 +8,7 @@ struct Player
    unsigned int pos_y;
    int case_dessous;
    int case_cible;
+   int dirrection;
    };
 
 bool verifyMove(int pos_x, int pos_y);

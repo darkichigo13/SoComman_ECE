@@ -22,6 +22,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Linker>
+			<Add library="C:/Program Files (x86)/CodeBlocks/MinGW/lib/liballeg44.dll.a" />
+			<Add library="C:/Program Files (x86)/CodeBlocks/MinGW/bin/alleg44.dll" />
+		</Linker>
 		<Unit filename="Box.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -39,6 +43,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Wall.h" />
+		<Unit filename="allegro_Perso.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="allegro_Perso.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

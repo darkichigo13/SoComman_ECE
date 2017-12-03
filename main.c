@@ -1,5 +1,8 @@
-#include <stdio.h>
+#include <allegro.h>
+#include <winalleg.h>
 #include <windows.h>
+
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -8,14 +11,19 @@
 #include "Wall.h"
 #include "Goal.h"
 #include "Constante.h"
+#include "allegro_Perso.h"
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 int main()
 {
+
     menu();
 
     return 0;
 }
+END_OF_MAIN();
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 int menu ()
@@ -64,6 +72,7 @@ int menu ()
 int menuJouer ()
 {
     system("cls");
+    printf("valeur de modeAffichage : %d\n",modeAffichage);
     int choix=0;
 
     printf("                                                                          \n");
@@ -83,10 +92,24 @@ int menuJouer ()
         switch (choix)
         {
         case 1 :
-            choix = jouer(1);
+            if(modeAffichage==1)
+            {
+                choix = jouer(1);
+            }
+            if(modeAffichage==0)
+            {
+                choix = jouerALLEGRO(1);
+            }
             break;
         case 2 :
-            choix = jouer(2);
+             if(modeAffichage==1)
+            {
+                choix = jouer(2);
+            }
+            if(modeAffichage==0)
+            {
+                choix = jouerALLEGRO(2);
+            }
             break;
         case 3 :
             choix = 101;
@@ -124,12 +147,13 @@ int jouer(int A)
     if(A == 2)
     {
         loadfile(saveFile1,matrice);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
     }
-
     Box *tabBox = dynamicAllocBox(dimB);
     Wall *tabWall = dynamicAllocWall(dimW);
     Player *tabPlayer = dynamicAllocPlayer(dimP);
     Goal *tabGoal = dynamicAllocGoal(dimG);
+
 
     int i;
     int j;
@@ -143,28 +167,32 @@ int jouer(int A)
     {
         for(j=0 ; j<nbColsMatrix ; j++)
         {
-            if(matrice[i][j] == 2){
+            if(matrice[i][j] == 2)
+            {
                 tabWall[w].pos_x = i;
                 tabWall[w].pos_y = j;
                 w = w + 1;
                 continue;
             }
 
-            if(matrice[i][j] == 3){
+            if(matrice[i][j] == 3)
+            {
                 tabBox[b].pos_x = i;
                 tabBox[b].pos_y = j;
                 b = b + 1;
                 continue;
             }
 
-            if(matrice[i][j] == 4){
+            if(matrice[i][j] == 4)
+            {
                 tabPlayer[p].pos_x=i;
                 tabPlayer[p].pos_y=j;
                 p = p + 1;
                 continue;
             }
 
-            if(matrice[i][j] == 6){
+            if(matrice[i][j] == 6)
+            {
                 tabGoal[g].pos_x=i;
                 tabGoal[g].pos_y=j;
                 g = g + 1;
@@ -173,16 +201,17 @@ int jouer(int A)
         }
     }
 
-    affichageTerrain(matrice);
-
-    // saveFile(matzrice);
+     affichageTerrain(matrice);  // traitement en fonction du choix d'affige
 
     while (endgame !=1)
     {
+
         if(!kbhit())
         {
+
             key=getch();
-            switch(key){
+            switch(key)
+            {
 
             case 'z' :
                 movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
@@ -208,15 +237,180 @@ int jouer(int A)
                 saveFile(matrice);
                 break;
             }
-            affichageTerrain(matrice);
+
+            affichageTerrain(matrice); // traitement en fonction du choix d'affige
+
             printf("%d", cpt);
             cpt=cpt+1;
         }
 
 //        endgame = findWin(tabBox,pdimB);
     }
-}
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+int jouerALLEGRO(int A)
+{
+    srand(time(NULL));
+     allegro_init();                      // initialisaiton d'allegro
+    install_keyboard();
+
+    set_color_depth(desktop_color_depth());
+    if (set_gfx_mode(GFX_AUTODETECT_WINDOWED,WINDOH,WINDOL,0,0)!=0)
+    {
+        allegro_message("prb gfx mode\n");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+    int endgame;
+    unsigned int matrice[nbRowsMatrix][nbColsMatrix];
+
+    int dimB=0;
+    int dimP=0;
+    int dimW=0;
+    int dimG=0;
+
+    char key=0;
+    int touche=0;
+    int temp=0;
+
+    system("cls");
+
+    if(A == 1)
+    {
+        loadfile(terrainFile1,matrice);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
+    }
+    if(A == 2)
+    {
+        loadfile(saveFile1,matrice);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
+    }
+
+    BITMAP *buffer;
+    buffer=create_bitmap(WINDOH,WINDOL);
+    if (!buffer)
+    {
+        allegro_message("prb allocation BITMAP bmp \n");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+    Box *tabBox = dynamicAllocBox(dimB);
+    Wall *tabWall = dynamicAllocWall(dimW);
+    Player *tabPlayer = dynamicAllocPlayer(dimP);
+    Goal *tabGoal = dynamicAllocGoal(dimG);
+
+    BITMAP **tabBitmap;                   // creation du tabeau de BITMAP
+    tabBitmap=initTabBitmap();            // implémentation du tableau de BITMAP
+
+    int i;
+    int j;
+    int w = 0;
+    int b = 0;
+    int p = 0;
+    int g = 0;
+    int cpt = 0;
+
+    for(i=0 ; i<nbRowsMatrix ; i++)
+    {
+        for(j=0 ; j<nbColsMatrix ; j++)
+        {
+            if(matrice[i][j] == 2)
+            {
+                tabWall[w].pos_x = i;
+                tabWall[w].pos_y = j;
+                w = w + 1;
+                continue;
+            }
+
+            if(matrice[i][j] == 3)
+            {
+                tabBox[b].pos_x = i;
+                tabBox[b].pos_y = j;
+                b = b + 1;
+                continue;
+            }
+
+            if(matrice[i][j] == 4)
+            {
+                tabPlayer[p].pos_x=i;
+                tabPlayer[p].pos_y=j;
+                p = p + 1;
+                continue;
+            }
+
+            if(matrice[i][j] == 6)
+            {
+                tabGoal[g].pos_x=i;
+                tabGoal[g].pos_y=j;
+                g = g + 1;
+                continue;
+            }
+        }
+    }
+
+     affichageTerrainALLEGRO(matrice,tabBitmap,buffer,tabPlayer,cpt);  // traitement en fonction du choix d'affige
+
+    while (endgame !=1)
+    {
+
+         if (keypressed())
+        {
+            // récupérer la touche avec readkey() : équivalent allegro du getch()
+            touche=readkey();
+
+            // a partir de l'info de touche on obtient le caractère en castant en char
+            key=(char)touche;
+            switch(key)
+            {
+
+            case 'z' :
+                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
+                implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
+                tabPlayer[0].dirrection=0;
+                break;
+
+            case 'q' :
+                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
+                implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
+                tabPlayer[0].dirrection=1;
+                break;
+
+            case 's' :
+                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
+                implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
+                tabPlayer[0].dirrection=2;
+                break;
+
+            case 'd' :
+                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
+                implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
+                tabPlayer[0].dirrection=3;
+                break;
+
+            case 'p' :
+                saveFile(matrice);
+                break;
+            case 'm' :
+                destroy_bitmap(buffer);
+                for (i=0;i<NIMAGE;i++)
+                {
+                    destroy_bitmap(tabBitmap[i]);
+                }
+                allegro_exit();
+                system("exit");
+                break;
+            }
+            affichageTerrainALLEGRO(matrice,tabBitmap,buffer,tabPlayer,cpt); // traitement en fonction du choix d'affige
+            printf("%d", cpt);
+            cpt=cpt+1;
+        }
+
+
+}
+}
 /////////////////////////////////////////////////////////////////////////////////////////////
 int findWin(Box * tab, int dim)
 {
@@ -261,9 +455,13 @@ int option ()
         scanf("%d",&choix);
         switch (choix)
         {
-        case 1 : // affichage console
+        case 1 :
+            modeAffichage=0;
+            choix=101;
             break;
-        case 2 :  // affichage allegro
+        case 2 :
+            modeAffichage=1;
+            choix=101;
             break;
         case 3 : //  musique
             break;
@@ -289,12 +487,14 @@ void implementationMatrice (unsigned int* matrice[nbRowsMatrix][nbColsMatrix],Bo
     {
         for(j=0; j<nbColsMatrix; j++)
         {
-            if(matrice[i][j] == 3){
+            if(matrice[i][j] == 3)
+            {
                 matrice[i][j] = 1;
                 continue;
             }
 
-            if(matrice[i][j] == 4){
+            if(matrice[i][j] == 4)
+            {
                 matrice[i][j] = 1;
                 continue;
             }
@@ -329,22 +529,26 @@ void recupDimTabs( unsigned int matrice[nbRowsMatrix][nbColsMatrix], int* dimB, 
     {
         for(j=0; j<nbColsMatrix; j++)
         {
-            if(matrice[i][j] == 2){
+            if(matrice[i][j] == 2)
+            {
                 *dimW = *dimW + 1;
                 continue;
             }
 
-            if(matrice[i][j] == 3){
+            if(matrice[i][j] == 3)
+            {
                 *dimB = *dimB + 1;
                 continue;
             }
 
-            if(matrice[i][j] == 4){
+            if(matrice[i][j] == 4)
+            {
                 *dimP = *dimP + 1;
                 continue;
             }
 
-            if(matrice[i][j] == 6){
+            if(matrice[i][j] == 6)
+            {
                 *dimG = *dimG + 1;
                 continue;
             }
@@ -385,7 +589,55 @@ void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix], in
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+void affichageTerrainALLEGRO(unsigned int matrice[nbRowsMatrix][nbColsMatrix],BITMAP **tabBitmap, BITMAP *buffer,Player *tabPlayer,int cpt)
+{
+int i=0;
+int j=0;
+        for(i=0; i<nbRowsMatrix; i++)
+        {
+            for(j=0; j<nbColsMatrix; j++)
+            {
+                switch (matrice[i][j])
+                {
+                case 1 :                           // sol
+                    draw_sprite(buffer,tabBitmap[1],PICTH*j,PICTL*i);
+                    break;
+                case 2 :                           // murs
+                    draw_sprite(buffer,tabBitmap[2],PICTH*j,PICTL*i);
+                    break;
+                case 3 :                           // box
+                    draw_sprite(buffer,tabBitmap[4],PICTH*j,PICTL*i);
+                    break;
+                case 4 : // perso
+                    draw_sprite(buffer,tabBitmap[1],PICTH*j,PICTL*i);
+                    switch(tabPlayer[0].dirrection)
+                    {
+                        case 0 :
+                            draw_sprite(buffer,tabBitmap[6+(cpt%4)],PICTH*j,PICTL*i);
+                            break;
+                        case 1 :
+                            draw_sprite(buffer,tabBitmap[18+(cpt%4)],PICTH*j,PICTL*i);
+                            break;
+                        case 2 :
+                            draw_sprite(buffer,tabBitmap[14+(cpt%4)],PICTH*j,PICTL*i);
+                            break;
+                        case 3 :
+                            draw_sprite(buffer,tabBitmap[10+(cpt%4)],PICTH*j,PICTL*i);
+                            break;
 
+                    }
+                    break;
+                case 6 :                           // goal
+                    draw_sprite(buffer,tabBitmap[5],PICTH*j,PICTL*i);
+                    break;
+                }
+            }
+        }
+        draw_sprite(screen,buffer,0,0);
+        clear_bitmap(buffer);
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
 {
     int i=0;
@@ -393,33 +645,34 @@ void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
 
     system("cls");
 
-    for(i=0; i<nbRowsMatrix; i++)
-    {
-        for(j=0; j<nbColsMatrix; j++)
+        for(i=0; i<nbRowsMatrix; i++)
         {
-            switch (matrice[i][j])
+            for(j=0; j<nbColsMatrix; j++)
             {
-            case 1 :                           // sol
-                printf("%c",outdoorpict);
-                break;
-            case 2 :                           // murs
-                printf("%c",wallpict);
-                break;
-            case 3 :                           // box
-                printf("%c",florpict);
-                break;
-            case 4 :                           // perso
-                printf("%c",persopict);
-                break;
-            case 6 :                           // goal
-                printf("%c",goalpict);
-                break;
+                switch (matrice[i][j])
+                {
+                case 1 :                           // sol
+                    printf("%c",outdoorpict);
+                    break;
+                case 2 :                           // murs
+                    printf("%c",wallpict);
+                    break;
+                case 3 :                           // box
+                    printf("%c",florpict);
+                    break;
+                case 4 :                           // perso
+                    printf("%c",persopict);
+                    break;
+                case 6 :                           // goal
+                    printf("%c",goalpict);
+                    break;
+                }
             }
+            printf("\n");
         }
-        printf("\n");
-    }
-}
 
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////
 void saveFile(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
 {
     int i,j;

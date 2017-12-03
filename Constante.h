@@ -1,11 +1,13 @@
 unsigned int nbRowsMatrix = 20;
 unsigned int nbColsMatrix = 20;
 
-int wallpict=178;
-int florpict=177;
-int outdoorpict=0;
-int persopict=169;
-int goalpict=170;
+const int wallpict=178;
+const int florpict=177;
+const int outdoorpict=0;
+const int persopict=169;
+const int goalpict=170;
+
+int modeAffichage =0;
 //
 //int dimB=20;
 //int dimP=1;
