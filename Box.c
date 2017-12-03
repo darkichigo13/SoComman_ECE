@@ -9,7 +9,6 @@ Box * dynamicAllocBox (int dim)
     Box *tabBox = NULL;
     int i = 0;
 
-
     tabBox = malloc(dim * sizeof(Box));
     if (tabBox == NULL) // si l'allocation a échoué
     {
@@ -19,6 +18,7 @@ Box * dynamicAllocBox (int dim)
     // initialisation struct Box :
     for (i=0; i<dim; i++)
     {
+        tabBox[i].id=i;
         tabBox[i].pos_x=1;
         tabBox[i].pos_y=1;
         tabBox[i].win=0;

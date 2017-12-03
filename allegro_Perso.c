@@ -14,6 +14,8 @@ BITMAP **initTabBitmap ()
     BITMAP ** bmp=NULL;
     BITMAP *fullBitmap;
 
+
+
     bmp = malloc(sizeof(BITMAP*)*NIMAGE);
     if (bmp == NULL) // Si l'allocation a échoué
     {

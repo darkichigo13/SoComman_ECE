@@ -3,15 +3,15 @@
 	<stdio.h>
 	<stdlib.h>
 
-1512260513 source:c:\users\eleve\documents\my_sokoban\socomman_ece\box.c
+1512333964 source:c:\users\eleve\documents\my_sokoban\socomman_ece\box.c
 	"Box.h"
 	<stdio.h>
 	<stdlib.h>
 
-1512257053 c:\users\eleve\documents\my_sokoban\socomman_ece\box.h
+1512333964 c:\users\eleve\documents\my_sokoban\socomman_ece\box.h
 	<stdbool.h>
 
-1512333676 source:c:\users\eleve\documents\my_sokoban\socomman_ece\main.c
+1512339584 source:c:\users\eleve\documents\my_sokoban\socomman_ece\main.c
 	<allegro.h>
 	<winalleg.h>
 	<windows.h>
@@ -37,11 +37,10 @@
 	<stdio.h>
 	<stdlib.h>
 
-1512323471 source:c:\users\eleve\documents\my_sokoban\socomman_ece\player.c
+1512334151 source:c:\users\eleve\documents\my_sokoban\socomman_ece\player.c
 	"Player.h"
 	"Box.h"
 	"Wall.h"
-	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 
@@ -49,9 +48,9 @@
 	"Goal.h"
 	<stdlib.h>
 
-1512322973 c:\users\eleve\documents\my_sokoban\socomman_ece\constante.h
+1512333964 c:\users\eleve\documents\my_sokoban\socomman_ece\constante.h
 
-1512332808 source:c:\users\eleve\documents\my_sokoban\socomman_ece\allegro_perso.c
+1512339389 source:c:\users\eleve\documents\my_sokoban\socomman_ece\allegro_perso.c
 	<allegro.h>
 	<winalleg.h>
 	<windows.h>

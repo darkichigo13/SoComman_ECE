@@ -50,15 +50,26 @@ int menu ()
         switch (choix)
         {
         case 1 :
-            choix = menuJouer();
+            menuJouer();
             break;
         case 2 :
-            choix = option();
+            option();
             break;
-        case 3 : //  Credit
+        case 3 : system("cls");
+        printf("                                                                          \n");
+        printf("                                                                          \n");
+        printf("                                                                          \n");
+        printf("                          -       SOKOBAN       -                         \n");
+        printf("                                                                          \n");
+        printf("                                                                          \n");
+        printf("                           SANSHEZ PALMA DANIEL                         \n\n");
+        printf("                              AMELINEAU LOUIS                           \n\n");
+        printf("                                                                          \n");
+        printf("                                                                          \n");
+                Sleep(10000);
             break;
         case 4 :
-            exit(0);// quitter
+            exit(EXIT_SUCCESS);
             break;
         default:
             choix =0;
@@ -92,23 +103,23 @@ int menuJouer ()
         switch (choix)
         {
         case 1 :
-            if(modeAffichage==1)
-            {
-                choix = jouer(1);
-            }
             if(modeAffichage==0)
             {
-                choix = jouerALLEGRO(1);
+                choix = jouer(1,0);
+            }
+            if(modeAffichage=1)
+            {
+                choix = prejouerALLEGRO(1,0);
             }
             break;
         case 2 :
-             if(modeAffichage==1)
-            {
-                choix = jouer(2);
-            }
             if(modeAffichage==0)
             {
-                choix = jouerALLEGRO(2);
+                choix = jouer(2,0);
+            }
+            if(modeAffichage==1)
+            {
+                choix = prejouerALLEGRO(2,0);
             }
             break;
         case 3 :
@@ -123,7 +134,7 @@ int menuJouer ()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-int jouer(int A)
+int jouer(int A, int cpt)
 {
     /////////////// delaration
     int endgame;
@@ -135,8 +146,6 @@ int jouer(int A)
     int dimG=0;
 
     char key;
-    int temp;
-
     system("cls");
 
     if(A == 1)
@@ -149,11 +158,21 @@ int jouer(int A)
         loadfile(saveFile1,matrice);
         recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
     }
+    if(A == 4)
+    {
+        loadfile(terrainFile2,matrice);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
+    }
+    if(A == 5)
+    {
+        loadfile(terrainFile3,matrice);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
+    }
+
     Box *tabBox = dynamicAllocBox(dimB);
     Wall *tabWall = dynamicAllocWall(dimW);
     Player *tabPlayer = dynamicAllocPlayer(dimP);
     Goal *tabGoal = dynamicAllocGoal(dimG);
-
 
     int i;
     int j;
@@ -161,7 +180,6 @@ int jouer(int A)
     int b = 0;
     int p = 0;
     int g = 0;
-    int cpt = 0;
 
     for(i=0 ; i<nbRowsMatrix ; i++)
     {
@@ -201,8 +219,7 @@ int jouer(int A)
         }
     }
 
-     affichageTerrain(matrice);  // traitement en fonction du choix d'affige
-
+    affichageTerrain(matrice,cpt);  // traitement en fonction du choix d'affige
     while (endgame !=1)
     {
 
@@ -233,27 +250,71 @@ int jouer(int A)
                 implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
                 break;
 
+            case 'k' :
+                jouer(A,0);
+                break;
+
             case 'p' :
                 saveFile(matrice);
                 break;
+            case 'm' :
+                menu();
+                break;
+
+
             }
 
-            affichageTerrain(matrice); // traitement en fonction du choix d'affige
-
-            printf("%d", cpt);
+            affichageTerrain(matrice,cpt); // traitement en fonction du choix d'affige
             cpt=cpt+1;
+            endgame = findWin(tabBox, tabGoal, dimB, dimG);
         }
-
-//        endgame = findWin(tabBox,pdimB);
     }
 
+    if( A == 1)
+    {
+        jouer(4,cpt);
+    }
+    else if( A == 4)
+    {
+        jouer(5,cpt);
+    }
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////
+
+    else if(A == 5)
+    {
+        system("cls");
+        printf("                                                                          \n");
+        printf("                                                                          \n");
+        printf("                                                                          \n");
+        printf("                          -       SOKOBAN       -                         \n");
+        printf("                                                                          \n");
+        printf("                                                                          \n");
+        printf("                                                                        \n\n");
+        printf("  :::   :::  ::::::::  :::    :::       :::       ::: ::::::::::: ::::    :::  \n");
+        printf("  :+:   :+: :+:    :+: :+:    :+:       :+:       :+:     :+:     :+:+:   :+:  \n");
+        printf("   +:+ +:+  +:+    +:+ +:+    +:+       +:+       +:+     +:+     :+:+:+  +:+  \n");
+        printf("    +#++:   +#+    +:+ +#+    +:+       +#+  +:+  +#+     +#+     +#+ +:+ +#+  \n");
+        printf("     +#+    +#+    +#+ +#+    +#+       +#+ +#+#+ +#+     +#+     +#+  +#+#+#  \n");
+        printf("     #+#    #+#    #+# #+#    #+#        #+#+# #+#+#      #+#     #+#   #+#+#  \n");
+        printf("     ###     ########   ########          ###   ###   ########### ###    ####  \n");
+        printf("                                                                          \n");
+        printf("                                                                          \n");
+        printf("                               Score : %d                                 \n\n", cpt);
+
+    }
+    saveScore(cpt);
+
+    Sleep(10000);
+
+    menu();
 }
-/////////////////////////////////////////////////////////////////////////////////////////////
-int jouerALLEGRO(int A)
+
+void prejouerALLEGRO(int A,int cpt)
 {
-    srand(time(NULL));
-     allegro_init();                      // initialisaiton d'allegro
+     srand(time(NULL));
+    allegro_init();                      // initialisaiton d'allegro
     install_keyboard();
 
     set_color_depth(desktop_color_depth());
@@ -263,6 +324,11 @@ int jouerALLEGRO(int A)
         allegro_exit();
         exit(EXIT_FAILURE);
     }
+    jouerALLEGRO(A,cpt);
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+int jouerALLEGRO(int A,int cpt)
+{
     int endgame;
     unsigned int matrice[nbRowsMatrix][nbColsMatrix];
 
@@ -287,6 +353,17 @@ int jouerALLEGRO(int A)
         loadfile(saveFile1,matrice);
         recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
     }
+    if(A == 4)
+    {
+        loadfile(terrainFile2,matrice);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
+    }
+    if(A == 5)
+    {
+        loadfile(terrainFile3,matrice);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
+    }
+
 
     BITMAP *buffer;
     buffer=create_bitmap(WINDOH,WINDOL);
@@ -304,6 +381,12 @@ int jouerALLEGRO(int A)
 
     BITMAP **tabBitmap;                   // creation du tabeau de BITMAP
     tabBitmap=initTabBitmap();            // implémentation du tableau de BITMAP
+    BITMAP *victoire;
+    victoire = load_bitmap("victoire.bmp",NULL);
+    if (!victoire)
+    {
+        printf("Couldn't load victoire.bmp!");
+    }
 
     int i;
     int j;
@@ -311,7 +394,6 @@ int jouerALLEGRO(int A)
     int b = 0;
     int p = 0;
     int g = 0;
-    int cpt = 0;
 
     for(i=0 ; i<nbRowsMatrix ; i++)
     {
@@ -351,13 +433,14 @@ int jouerALLEGRO(int A)
         }
     }
 
-     affichageTerrainALLEGRO(matrice,tabBitmap,buffer,tabPlayer,cpt);  // traitement en fonction du choix d'affige
+    affichageTerrainALLEGRO(matrice,tabBitmap,buffer,tabPlayer,cpt);  // traitement en fonction du choix d'affige
 
     while (endgame !=1)
     {
 
-         if (keypressed())
+        if (keypressed())
         {
+            system("cls");
             // récupérer la touche avec readkey() : équivalent allegro du getch()
             touche=readkey();
 
@@ -390,35 +473,83 @@ int jouerALLEGRO(int A)
                 tabPlayer[0].dirrection=3;
                 break;
 
+            case 'k' :
+                jouerALLEGRO(A,0);
+                break;
+
             case 'p' :
                 saveFile(matrice);
                 break;
             case 'm' :
-                destroy_bitmap(buffer);
-                for (i=0;i<NIMAGE;i++)
-                {
-                    destroy_bitmap(tabBitmap[i]);
-                }
+                 destroy_bitmap(victoire);
+                 for(i=0; i<NIMAGE; i++)
+                 {
+                     destroy_bitmap(tabBitmap[i]);
+                 }
                 allegro_exit();
-                system("exit");
+                menu();
+
                 break;
+
             }
-            affichageTerrainALLEGRO(matrice,tabBitmap,buffer,tabPlayer,cpt); // traitement en fonction du choix d'affige
-            printf("%d", cpt);
+
+            affichageTerrainALLEGRO(matrice,tabBitmap,buffer,tabPlayer,cpt);  // traitement en fonction du choix d'affige
             cpt=cpt+1;
+            endgame = findWin(tabBox, tabGoal, dimB, dimG);
         }
+    }
 
-
-}
-}
-/////////////////////////////////////////////////////////////////////////////////////////////
-int findWin(Box * tab, int dim)
-{
-    int i =0;
-    int compter=0;
-    for (i=0; i<dim; i++)
+    if( A == 1)
     {
-        if (tab[i].win == 0) compter++;
+        jouerALLEGRO(4,cpt);
+    }
+    else if( A == 4)
+    {
+        jouerALLEGRO(5,cpt);
+    }
+    else if(A == 5)
+    {
+        system("cls");
+
+    clear_bitmap(screen);
+    draw_sprite(screen,victoire,0,0);
+    saveScore(cpt);
+    Sleep(10000);
+
+    allegro_exit();
+
+    }
+    menu();
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+int findWin(Box * tabBox, Goal * tabGoal, int dimB, int dimG)
+{
+    int i = 0;
+    int j = 0;
+    int tmp = 0;
+
+    for (i=0; i<dimB; i++)
+    {
+        for (j=0; j<dimG; j++)
+        {
+            if(tabBox[i].pos_x == tabGoal[j].pos_x && tabBox[i].pos_y == tabGoal[j].pos_y)
+            {
+                tabBox[i].win = 1;
+                tmp = tmp + 1;
+            }
+            else if(tmp == 0)
+            {
+                tabBox[i].win = 0;
+            }
+        }
+    }
+
+    int compter=0;
+    for (i=0; i<dimB; i++)
+    {
+        if (tabBox[i].win == 0) compter++;
     }
     if (compter == 0)
     {
@@ -591,87 +722,119 @@ void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix], in
 /////////////////////////////////////////////////////////////////////////////////////////////
 void affichageTerrainALLEGRO(unsigned int matrice[nbRowsMatrix][nbColsMatrix],BITMAP **tabBitmap, BITMAP *buffer,Player *tabPlayer,int cpt)
 {
-int i=0;
-int j=0;
-        for(i=0; i<nbRowsMatrix; i++)
+    int i=0;
+    int j=0;
+    for(i=0; i<nbRowsMatrix; i++)
+    {
+        for(j=0; j<nbColsMatrix; j++)
         {
-            for(j=0; j<nbColsMatrix; j++)
+            switch (matrice[i][j])
             {
-                switch (matrice[i][j])
+            case 1 :                           // sol
+                draw_sprite(buffer,tabBitmap[1],PICTH*j,PICTL*i);
+                break;
+            case 2 :                           // murs
+                draw_sprite(buffer,tabBitmap[2],PICTH*j,PICTL*i);
+                break;
+            case 3 :                           // box
+                draw_sprite(buffer,tabBitmap[4],PICTH*j,PICTL*i);
+                break;
+            case 4 : // perso
+                draw_sprite(buffer,tabBitmap[1],PICTH*j,PICTL*i);
+                switch(tabPlayer[0].dirrection)
                 {
-                case 1 :                           // sol
-                    draw_sprite(buffer,tabBitmap[1],PICTH*j,PICTL*i);
+                case 0 :
+                    draw_sprite(buffer,tabBitmap[6+(cpt%4)],PICTH*j,PICTL*i);
                     break;
-                case 2 :                           // murs
-                    draw_sprite(buffer,tabBitmap[2],PICTH*j,PICTL*i);
+                case 1 :
+                    draw_sprite(buffer,tabBitmap[18+(cpt%4)],PICTH*j,PICTL*i);
                     break;
-                case 3 :                           // box
-                    draw_sprite(buffer,tabBitmap[4],PICTH*j,PICTL*i);
+                case 2 :
+                    draw_sprite(buffer,tabBitmap[14+(cpt%4)],PICTH*j,PICTL*i);
                     break;
-                case 4 : // perso
-                    draw_sprite(buffer,tabBitmap[1],PICTH*j,PICTL*i);
-                    switch(tabPlayer[0].dirrection)
-                    {
-                        case 0 :
-                            draw_sprite(buffer,tabBitmap[6+(cpt%4)],PICTH*j,PICTL*i);
-                            break;
-                        case 1 :
-                            draw_sprite(buffer,tabBitmap[18+(cpt%4)],PICTH*j,PICTL*i);
-                            break;
-                        case 2 :
-                            draw_sprite(buffer,tabBitmap[14+(cpt%4)],PICTH*j,PICTL*i);
-                            break;
-                        case 3 :
-                            draw_sprite(buffer,tabBitmap[10+(cpt%4)],PICTH*j,PICTL*i);
-                            break;
+                case 3 :
+                    draw_sprite(buffer,tabBitmap[10+(cpt%4)],PICTH*j,PICTL*i);
+                    break;
 
-                    }
-                    break;
-                case 6 :                           // goal
-                    draw_sprite(buffer,tabBitmap[5],PICTH*j,PICTL*i);
-                    break;
                 }
+                break;
+            case 6 :                           // goal
+                draw_sprite(buffer,tabBitmap[5],PICTH*j,PICTL*i);
+                break;
             }
         }
-        draw_sprite(screen,buffer,0,0);
-        clear_bitmap(buffer);
     }
+    draw_sprite(screen,buffer,0,0);
+    clear_bitmap(buffer);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
+void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix],int cpt)
 {
     int i=0;
     int j=0;
 
     system("cls");
 
-        for(i=0; i<nbRowsMatrix; i++)
+    for(i=0; i<nbRowsMatrix; i++)
+    {
+        for(j=0; j<nbColsMatrix; j++)
         {
-            for(j=0; j<nbColsMatrix; j++)
+            switch (matrice[i][j])
             {
-                switch (matrice[i][j])
-                {
-                case 1 :                           // sol
-                    printf("%c",outdoorpict);
-                    break;
-                case 2 :                           // murs
-                    printf("%c",wallpict);
-                    break;
-                case 3 :                           // box
-                    printf("%c",florpict);
-                    break;
-                case 4 :                           // perso
-                    printf("%c",persopict);
-                    break;
-                case 6 :                           // goal
-                    printf("%c",goalpict);
-                    break;
-                }
+            case 1 :                           // sol
+                printf("%c",outdoorpict);
+                break;
+            case 2 :                           // murs
+                printf("%c",wallpict);
+                break;
+            case 3 :                           // box
+                printf("%c",florpict);
+                break;
+            case 4 :                           // perso
+                printf("%c",persopict);
+                break;
+            case 6 :                           // goal
+                printf("%c",goalpict);
+                break;
             }
-            printf("\n");
-        }
-
+              }
+    if(i == 2)
+    {
+        printf("        -       SOKOBAN       -");
     }
+    if(i == 5)
+    {
+        printf("               Moves : %d", cpt);
+    }
+    else if(i == 8)
+    {
+        printf("                 Press :");
+    }
+    else if(i == 10)
+    {
+        printf("                   z");
+    }
+    else if(i == 11)
+    {
+        printf("                 q + d");
+    }
+    else if(i == 12)
+    {
+        printf("                   s");
+    }
+    else if(i == 14)
+    {
+        printf("                For move");
+    }
+    else if(i == 17)
+    {
+        printf("     press k to restart and m to leave");
+    }
+    printf("\n");
+  }
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 void saveFile(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
 {
@@ -702,4 +865,57 @@ void saveFile(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
         }
         fclose(fichier);
     }
+}
+
+void saveScore(int cpt)
+{
+    int previous_cpt;
+    previous_cpt = loadScore();
+    if(previous_cpt <= cpt)
+    {
+        printf("\n");
+        printf("You not realize the best score (%d), try again !", previous_cpt);
+    }
+
+    else if(previous_cpt > cpt)
+    {
+        char tampon=0;
+        FILE* fichier = NULL;
+        fichier = fopen(savedScore, "w+");
+
+        if (fichier == NULL)
+        {
+            printf("Impossible d'ouvrir le fichier :  %c.txt",savedScore);
+            exit(0);
+        }
+        else
+        {
+            fprintf(fichier,"%d",cpt);
+            printf("\n");
+            printf("                            NEW BEST RECORD !!! \n\n");
+            printf("                         previous best record : %d\n", previous_cpt);
+            printf("                            new best record : %d", cpt);
+        }
+        fclose(fichier);
+    }
+}
+
+int loadScore()
+{
+    int i, cpt;
+    char tampon=0;
+    FILE* fichier = NULL;
+    fichier = fopen(savedScore, "r");
+    if(fichier == NULL)
+    {
+        printf("Impossible d'ouvrir le fichier %c", savedScore);
+        exit(0);
+    }
+    else
+    {
+        fscanf(fichier, "%d", &cpt);
+    }
+    fclose(fichier);
+
+    return cpt;
 }
