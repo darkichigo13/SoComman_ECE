@@ -16,7 +16,7 @@ BITMAP **initTabBitmap ()
 
 
 
-    bmp = malloc(sizeof(BITMAP*)*NIMAGE);
+    bmp = malloc(sizeof(BITMAP*)*NIMAGE); // allocation mémoire du tableau de bitmap
     if (bmp == NULL) // Si l'allocation a échoué
     {
         printf("erreur allocation dynamique");
@@ -31,7 +31,7 @@ BITMAP **initTabBitmap ()
 
     for(i=0; i<NIMAGE; i++)
     {
-        bmp[i]=create_bitmap(WINDOH,WINDOL);
+        bmp[i]=create_bitmap(WINDOH,WINDOL); // creation mémoire de l'ensemble des bitmap a la bonne taille
     }
     blit(fullBitmap,bmp[0],solTerreX,solTerreY,0, 0, PICTL,PICTH); // sol terre
     blit(fullBitmap,bmp[1],solSableX,solSableY,0, 0, PICTL,PICTH); // sol sable
@@ -60,6 +60,6 @@ BITMAP **initTabBitmap ()
     blit(fullBitmap,bmp[20],185,62,0, 0, PICTL,PICTH);
     blit(fullBitmap,bmp[21],217,0,0, 0, PICTL,PICTH);
 
-    return (bmp);
+    return (bmp); // retour du pointeur du tableau de bitmap
 }
 

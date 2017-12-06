@@ -19,11 +19,11 @@
 int main()
 {
 
-    menu();
+    menu(); // lancement du jeu
 
     return 0;
 }
-END_OF_MAIN();
+END_OF_MAIN();  // fin allegro
 
 int menu ()
 {
@@ -62,14 +62,14 @@ int menu ()
             printf("                          -       SOKOBAN       -                         \n");
             printf("                                                                          \n");
             printf("                                                                          \n");
-            printf("                           SANSHEZ PALMA DANIEL                         \n\n");
+            printf("                           SANCHEZ PALMA DANIEL                         \n\n");
             printf("                              AMELINEAU LOUIS                           \n\n");
             printf("                                                                          \n");
             printf("                                                                          \n");
             Sleep(10000);
             break;
         case 4 :
-            exit(EXIT_SUCCESS);
+            exit(EXIT_SUCCESS); // on quitte le programme
             break;
         default:
             choix =0;
@@ -82,7 +82,6 @@ int menu ()
 int menuJouer ()
 {
     system("cls");
-    printf("valeur de modeAffichage : %d\n",modeAffichage);
     int choix=0;
 
     printf("                                                                          \n");
@@ -102,23 +101,23 @@ int menuJouer ()
         switch (choix)
         {
         case 1 :
-            if(modeAffichage==0)
+            if(modeAffichage==0) // selection du mode d'affichage en fonction du choix utilisateur
             {
-                choix = jouer(1,0);
+                choix = jouer(1,0); // affichage console
             }
             if(modeAffichage=1)
             {
-                choix = prejouerALLEGRO(1,0);
+                choix = prejouerALLEGRO(1,0); // affichage allegro
             }
             break;
         case 2 :
-            if(modeAffichage==0)
+            if(modeAffichage==0)// selection du mode d'affichage en fonction du choix utilisateur
             {
-                choix = jouer(2,0);
+                choix = jouer(2,0);  // affichage console
             }
             if(modeAffichage==1)
             {
-                choix = prejouerALLEGRO(2,0);
+                choix = prejouerALLEGRO(2,0);  // affichage allegro
             }
             break;
         case 3 :
@@ -132,7 +131,7 @@ int menuJouer ()
     return (choix);
 }
 
-int jouer(int A, int cpt)
+int jouer(int A, int cpt) // fonction de jeu
 {
     /////////////// delaration
     int endgame;
@@ -146,27 +145,28 @@ int jouer(int A, int cpt)
     char key;
     system("cls");
 
-    if(A == 1)
+    if(A == 1)  // chargement du niveau désiré
     {
-        loadfile(terrainFile1,matrice);
+        loadfile(terrainFile1,matrice); // niveau 1
         recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
     }
     if(A == 2)
     {
-        loadfile(saveFile1,matrice);
+        loadfile(saveFile1,matrice);  // niveau sauvegardé
         recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
     }
     if(A == 4)
     {
-        loadfile(terrainFile2,matrice);
+        loadfile(terrainFile2,matrice);  // niveau 2
         recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
     }
     if(A == 5)
     {
-        loadfile(terrainFile3,matrice);
+        loadfile(terrainFile3,matrice);  // niveau 3
         recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
     }
 
+        // déclaration des tableaux de structure contenant nos différents éléments
     Box *tabBox = dynamicAllocBox(dimB);
     Wall *tabWall = dynamicAllocWall(dimW);
     Player *tabPlayer = dynamicAllocPlayer(dimP);
@@ -179,7 +179,7 @@ int jouer(int A, int cpt)
     int p = 0;
     int g = 0;
 
-    for(i=0 ; i<nbRowsMatrix ; i++)
+    for(i=0 ; i<nbRowsMatrix ; i++) // remplisage des tabeaux avec les valeurs charger dans la matrice
     {
         for(j=0 ; j<nbColsMatrix ; j++)
         {
@@ -218,45 +218,45 @@ int jouer(int A, int cpt)
     }
 
     affichageTerrain(matrice,cpt);  // traitement en fonction du choix d'affige
-    while (endgame !=1)
+    while (endgame !=1) // boucle de jeu
     {
 
-        if(!kbhit())
+        if(!kbhit())   // si un touche est frappée
         {
 
-            key=getch();
+            key=getch(); // récupération de la touche frappé
             switch(key)
             {
 
             case 'z' :
-                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
+                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW); // appelle de la fonction de vérification de déplacement et de modification des coordonnées des élélments de jeu
                 implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
                 break;
 
             case 'q' :
-                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
+                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);// appelle de la fonction de vérification de déplacement et de modification des coordonnées des élélments de jeu
                 implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
                 break;
 
             case 's' :
-                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
+                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);// appelle de la fonction de vérification de déplacement et de modification des coordonnées des élélments de jeu
                 implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
                 break;
 
             case 'd' :
-                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
+                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);// appelle de la fonction de vérification de déplacement et de modification des coordonnées des élélments de jeu
                 implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
                 break;
 
             case 'k' :
-                jouer(A,0);
+                jouer(A,0); // réinitialisation du niveau
                 break;
 
             case 'p' :
-                saveFile(matrice);
+                saveFile(matrice); // sauvegarde de la partie en cours
                 break;
             case 'm' :
-                menu();
+                menu(); // retour menu
                 break;
 
 
@@ -264,11 +264,11 @@ int jouer(int A, int cpt)
 
             affichageTerrain(matrice,cpt); // traitement en fonction du choix d'affige
             cpt=cpt+1;
-            endgame = findWin(tabBox, tabGoal, dimB, dimG);
+            endgame = findWin(tabBox, tabGoal, dimB, dimG); // fonction de teste de fin de partie
         }
     }
 
-    if( A == 1)
+    if( A == 1) // en fonction du niveau actuel on charge le suivant
     {
         jouer(4,cpt);
     }
@@ -280,7 +280,7 @@ int jouer(int A, int cpt)
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-    else if(A == 5)
+    else if(A == 5) // affichage de l'écran de victoire si on fini le jeu
     {
         system("cls");
         printf("                                                                          \n");
@@ -302,18 +302,19 @@ int jouer(int A, int cpt)
         printf("                               Score : %d                                 \n\n", cpt);
 
     }
-    saveScore(cpt);
+    saveScore(cpt); // sauvegarde du score
 
-    Sleep(10000);
+    Sleep(10000); // temporisation
 
-    menu();
+    menu(); // retour menu
 }
 
-void prejouerALLEGRO(int A,int cpt)
+void prejouerALLEGRO(int A,int cpt) // initialisation du mode allegro
 {
     srand(time(NULL));
     allegro_init();                      // initialisaiton d'allegro
     install_keyboard();
+   // extern FONT *font; // déclaration police d'écriture
 
     set_color_depth(desktop_color_depth());
     if (set_gfx_mode(GFX_AUTODETECT_WINDOWED,WINDOH,WINDOL,0,0)!=0)
@@ -322,10 +323,10 @@ void prejouerALLEGRO(int A,int cpt)
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-    jouerALLEGRO(A,cpt);
+    jouerALLEGRO(A,cpt); // appelle de la fonciton jouer allegro
 }
 
-int jouerALLEGRO(int A,int cpt)
+int jouerALLEGRO(int A,int cpt) // fonciton de jeu en mode allegro
 {
     int endgame;
     unsigned int matrice[nbRowsMatrix][nbColsMatrix];
@@ -341,7 +342,7 @@ int jouerALLEGRO(int A,int cpt)
 
     system("cls");
 
-    if(A == 1)
+    if(A == 1)  // chargement du niveau désiré
     {
         loadfile(terrainFile1,matrice);
         recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
@@ -363,7 +364,7 @@ int jouerALLEGRO(int A,int cpt)
     }
 
 
-    BITMAP *buffer;
+    BITMAP *buffer; // déclaration des ressources allegro
     buffer=create_bitmap(WINDOH,WINDOL);
     if (!buffer)
     {
@@ -385,7 +386,7 @@ int jouerALLEGRO(int A,int cpt)
     {
         printf("Couldn't load victoire.bmp!");
     }
-
+    int buffscore=0;
     int i;
     int j;
     int w = 0;
@@ -496,7 +497,7 @@ int jouerALLEGRO(int A,int cpt)
             endgame = findWin(tabBox, tabGoal, dimB, dimG);
         }
     }
-
+     A=5;
     if( A == 1)
     {
         jouerALLEGRO(4,cpt);
@@ -509,25 +510,30 @@ int jouerALLEGRO(int A,int cpt)
     {
         system("cls");
 
-        clear_bitmap(screen);
-        draw_sprite(screen,victoire,0,0);
-        saveScore(cpt);
-        Sleep(10000);
+        clear_bitmap(screen); // réinitialisation du screen
+        draw_sprite(screen,victoire,0,0); // affichage de la bitmap de victoire
+        buffscore=loadScore();
 
-        allegro_exit();
+        textprintf_centre_ex(screen, font, 380, 430, makecol(50,255,140), 0, "BEST SCORE = %d", buffscore); // affichage du score sauvegarder
+        textprintf_centre_ex(screen, font, 380, 460, makecol(255,140,50), 0, " YOUR SCORE = %d ", cpt); // affichage du score du joueur
+
+        saveScore(cpt); // sauvegarde du score
+        Sleep(10000); // temporisation
+
+        allegro_exit(); // fin allegro
 
     }
-    menu();
+    menu(); // retour menu
 
 }
 
-int findWin(Box * tabBox, Goal * tabGoal, int dimB, int dimG)
+int findWin(Box * tabBox, Goal * tabGoal, int dimB, int dimG) // test de fin de partie
 {
     int i = 0;
     int j = 0;
     int tmp = 0;
 
-    for (i=0; i<dimB; i++)
+    for (i=0; i<dimB; i++) // parcour du tableau de box pour savoir si elles sont posées
     {
         for (j=0; j<dimG; j++)
         {
@@ -559,7 +565,7 @@ int findWin(Box * tabBox, Goal * tabGoal, int dimB, int dimG)
     return (compter);
 }
 
-int option ()
+int option () // sous menu d'option utilisateur
 {
     int choix=0;
 
@@ -603,7 +609,7 @@ int option ()
     return(choix);
 }
 
-void implementationMatrice (unsigned int* matrice[nbRowsMatrix][nbColsMatrix],Box *tabBox,Player *tabPlayer, Goal *tabGoal, int dimB,int dimP, int dimG)
+void implementationMatrice (unsigned int* matrice[nbRowsMatrix][nbColsMatrix],Box *tabBox,Player *tabPlayer, Goal *tabGoal, int dimB,int dimP, int dimG) // fonction de chargement de la matrice de terrain depuis un fichier
 {
     int i;
     int j;
@@ -644,12 +650,12 @@ void implementationMatrice (unsigned int* matrice[nbRowsMatrix][nbColsMatrix],Bo
 
 }
 
-void recupDimTabs( unsigned int matrice[nbRowsMatrix][nbColsMatrix], int* dimB, int* dimP, int* dimW, int* dimG)
+void recupDimTabs( unsigned int matrice[nbRowsMatrix][nbColsMatrix], int* dimB, int* dimP, int* dimW, int* dimG) // décupération du nombre d'éléments de chaque type
 {
     int i=0;
     int j=0;
 
-    for(i=0; i<nbRowsMatrix; i++)
+    for(i=0; i<nbRowsMatrix; i++) // parcours de la matrice
     {
         for(j=0; j<nbColsMatrix; j++)
         {
@@ -682,25 +688,25 @@ void recupDimTabs( unsigned int matrice[nbRowsMatrix][nbColsMatrix], int* dimB, 
     return 0;
 }
 
-void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix], int * pdimB, int * pdimP, int * pdimW)
+void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix], int * pdimB, int * pdimP, int * pdimW)// fonction de parcours du fichier et de replisage de la matrice
 {
     int i=0;
     int j=0;
     bool finfichier=0;
-    char tampon[nbColsMatrix+1];
+    char tampon[nbColsMatrix+1]; // tampon de lecture des caractères du fichier
     FILE* fichier = NULL;
-    fichier = fopen(name, "r+");
-    if(fichier == NULL)
+    fichier = fopen(name, "r+"); // ouverture du fichier
+    if(fichier == NULL) // vérification de l'ouverture
     {
-        exit(0);
         printf("Impossible d'ouvrir le fichier %c",name);
+        exit(0); // si fail : fermeture du programme
     }
     else
     {
 
-        for (i=0; i<nbRowsMatrix; i++)
+        for (i=0; i<nbRowsMatrix; i++) // conversion ascii
         {
-            fgets(tampon,(nbColsMatrix*nbRowsMatrix),fichier);
+            fgets(tampon,(nbColsMatrix*nbRowsMatrix),fichier); // parcours du fichier
 
             for (j=0; j<nbColsMatrix; j++)
             {
@@ -708,10 +714,10 @@ void loadfile(char * name,  unsigned int matrice[nbRowsMatrix][nbColsMatrix], in
             }
         }
     }
-    fclose(fichier);
+    fclose(fichier); // fermeture du fichier
 }
 
-void affichageTerrainALLEGRO(unsigned int matrice[nbRowsMatrix][nbColsMatrix],BITMAP **tabBitmap, BITMAP *buffer,Player *tabPlayer,int cpt)
+void affichageTerrainALLEGRO(unsigned int matrice[nbRowsMatrix][nbColsMatrix],BITMAP **tabBitmap, BITMAP *buffer,Player *tabPlayer,int cpt)// fonction d'affichage graffique
 {
     int i=0;
     int j=0;
@@ -719,7 +725,7 @@ void affichageTerrainALLEGRO(unsigned int matrice[nbRowsMatrix][nbColsMatrix],BI
     {
         for(j=0; j<nbColsMatrix; j++)
         {
-            switch (matrice[i][j])
+            switch (matrice[i][j]) // choix de la bitmap a afficher
             {
             case 1 :                           // sol
                 draw_sprite(buffer,tabBitmap[1],PICTH*j,PICTL*i);
@@ -732,34 +738,36 @@ void affichageTerrainALLEGRO(unsigned int matrice[nbRowsMatrix][nbColsMatrix],BI
                 break;
             case 4 : // perso
                 draw_sprite(buffer,tabBitmap[1],PICTH*j,PICTL*i);
-                switch(tabPlayer[0].dirrection)
+
+                switch(tabPlayer[0].dirrection) // choix de l'orientation du personnage
                 {
                 case 0 :
-                    draw_sprite(buffer,tabBitmap[6+(cpt%4)],PICTH*j,PICTL*i);
+                    draw_sprite(buffer,tabBitmap[6+(cpt%4)],PICTH*j,PICTL*i); // choix de la frame de l'annimation a affichier
                     break;
                 case 1 :
-                    draw_sprite(buffer,tabBitmap[18+(cpt%4)],PICTH*j,PICTL*i);
+                    draw_sprite(buffer,tabBitmap[18+(cpt%4)],PICTH*j,PICTL*i);// choix de la frame de l'annimation a affichier
                     break;
                 case 2 :
-                    draw_sprite(buffer,tabBitmap[14+(cpt%4)],PICTH*j,PICTL*i);
+                    draw_sprite(buffer,tabBitmap[14+(cpt%4)],PICTH*j,PICTL*i);// choix de la frame de l'annimation a affichier
                     break;
                 case 3 :
-                    draw_sprite(buffer,tabBitmap[10+(cpt%4)],PICTH*j,PICTL*i);
+                    draw_sprite(buffer,tabBitmap[10+(cpt%4)],PICTH*j,PICTL*i);// choix de la frame de l'annimation a affichier
                     break;
 
                 }
                 break;
             case 6 :                           // goal
-                draw_sprite(buffer,tabBitmap[5],PICTH*j,PICTL*i);
+                draw_sprite(buffer,tabBitmap[5],PICTH*j,PICTL*i); // affichage des goal
                 break;
             }
         }
     }
-    draw_sprite(screen,buffer,0,0);
-    clear_bitmap(buffer);
+    draw_sprite(screen,buffer,0,0); // affichage de l'image final sur l'écran
+    textprintf_centre_ex(screen, font, 700, 100, makecol(255,140,50), 0, "SCORE = %d ", cpt); // affichage du score
+    clear_bitmap(buffer); // supréssion du buffer
 }
 
-void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix],int cpt)
+void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix],int cpt) // affichage terrain en mode console
 {
     int i=0;
     int j=0;
@@ -789,7 +797,7 @@ void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix],int cpt)
                 break;
             }
         }
-        if(i == 2)
+        if(i == 2) // mise en place de l'interface utilisateur du mode console
         {
             printf("        -       SOKOBAN       -");
         }
@@ -825,42 +833,42 @@ void affichageTerrain(unsigned int matrice[nbRowsMatrix][nbColsMatrix],int cpt)
     }
 }
 
-void saveFile(unsigned int matrice[nbRowsMatrix][nbColsMatrix])
+void saveFile(unsigned int matrice[nbRowsMatrix][nbColsMatrix]) // fonction de sauvegade de la partie en cour
 {
     int i,j;
 
     char tampon=0;
-    FILE* fichier = NULL;
-    fichier = fopen(saveFile1, "w+");
+    FILE* fichier = NULL; // pointeur sur le fichier
+    fichier = fopen(saveFile1, "w+"); // ouverture du fichier en mode écriture
 
-    if (fichier == NULL)
+    if (fichier == NULL) // vérification de l'ouverture du fichier
     {
 
         printf("Impossible d'ouvrir le fichier :  %c.txt",saveFile1);
-        exit(0);
+        exit(0);// quitter le programme si non ouverture
     }
     else
     {
-        for (i=0; i<nbRowsMatrix; i++)
+        for (i=0; i<nbRowsMatrix; i++) // parcours de la matrice
         {
 
             for (j=0; j<nbColsMatrix; j++)
             {
-                fprintf(fichier,"%d",matrice[i][j]);
+                fprintf(fichier,"%d",matrice[i][j]); // écriture de la matrice dans le fichier
 
 
             }
-            fputc('\n',fichier);
+            fputc('\n',fichier); // retoure a la ligne dans le fichier
         }
-        fclose(fichier);
+        fclose(fichier); // fermeture du fichier
     }
 }
 
-void saveScore(int cpt)
+void saveScore(int cpt) // fonction de sauvegarde du score
 {
     int previous_cpt;
     previous_cpt = loadScore();
-    if(previous_cpt <= cpt)
+    if(previous_cpt <= cpt) // comparaison pour écrire que le meilleur score
     {
         printf("\n");
         printf("You not realize the best score (%d), try again !", previous_cpt);
@@ -870,7 +878,7 @@ void saveScore(int cpt)
     {
         char tampon=0;
         FILE* fichier = NULL;
-        fichier = fopen(savedScore, "w+");
+        fichier = fopen(savedScore, "w+"); // ouverture du fichier de score
 
         if (fichier == NULL)
         {
@@ -889,22 +897,22 @@ void saveScore(int cpt)
     }
 }
 
-int loadScore()
+int loadScore() // fonction de lecture du meilleur score dans le fichier de score
 {
     int i, cpt;
     char tampon=0;
     FILE* fichier = NULL;
     fichier = fopen(savedScore, "r");
-    if(fichier == NULL)
+    if(fichier == NULL) // ouverture du fichier
     {
         printf("Impossible d'ouvrir le fichier %c", savedScore);
-        exit(0);
+        exit(0); // quitter si non ouverture
     }
     else
     {
-        fscanf(fichier, "%d", &cpt);
+        fscanf(fichier, "%d", &cpt); // lecture du score
     }
-    fclose(fichier);
+    fclose(fichier); // fermeture du fichier
 
-    return cpt;
+    return cpt; // retour du score
 }
