@@ -8,6 +8,7 @@ const int persopict=169;
 const int goalpict=170;
 
 int modeAffichage =0;
+int ia=0;
 //
 //int dimB=20;
 //int dimP=1;

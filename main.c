@@ -93,7 +93,8 @@ int menuJouer ()
     printf("                                                                        \n\n");
     printf("                                1. Nouvelle partie     \n\n");
     printf("                                2. Charger partie    \n\n");
-    printf("                                3. Menu    \n\n");
+    printf("                                3. jouer IA                           \n\n");
+    printf("                                4. Menu    \n\n");
 
     while (choix !=101)
     {
@@ -107,7 +108,7 @@ int menuJouer ()
             }
             if(modeAffichage=1)
             {
-                choix = prejouerALLEGRO(1,0); // affichage allegro
+                choix = prejouerALLEGRO(1,0,ia); // affichage allegro
             }
             break;
         case 2 :
@@ -117,10 +118,16 @@ int menuJouer ()
             }
             if(modeAffichage==1)
             {
-                choix = prejouerALLEGRO(2,0);  // affichage allegro
+                choix = prejouerALLEGRO(2,0,ia);  // affichage allegro
             }
             break;
         case 3 :
+            if(ia==1 || ia==2)
+            {
+            choix = prejouerALLEGRO(1,0,ia);  // jouer ia
+            }
+            break;
+        case 4 :
             choix = 101;
             break;
         default:
@@ -134,7 +141,7 @@ int menuJouer ()
 int jouer(int A, int cpt) // fonction de jeu
 {
     /////////////// delaration
-    int endgame;
+    int endgame=0;
     unsigned int matrice[nbRowsMatrix][nbColsMatrix];
 
     int dimB=0;
@@ -261,10 +268,17 @@ int jouer(int A, int cpt) // fonction de jeu
 
 
             }
-
             affichageTerrain(matrice,cpt); // traitement en fonction du choix d'affige
             cpt=cpt+1;
             endgame = findWin(tabBox, tabGoal, dimB, dimG); // fonction de teste de fin de partie
+//            if(failedGame(matrice))
+//            {
+//                system("cls");
+//                printf("\n\n                Perdu !     \n\n");
+//                printf("\n\n             recommence ;)    \n\n");
+//                Sleep(3000);
+//                exit(EXIT_SUCCESS); // on quitte le programme
+//            }
         }
     }
 
@@ -309,7 +323,7 @@ int jouer(int A, int cpt) // fonction de jeu
     menu(); // retour menu
 }
 
-void prejouerALLEGRO(int A,int cpt) // initialisation du mode allegro
+void prejouerALLEGRO(int A,int cpt, int ia) // initialisation du mode allegro
 {
     srand(time(NULL));
     allegro_init();                      // initialisaiton d'allegro
@@ -323,7 +337,15 @@ void prejouerALLEGRO(int A,int cpt) // initialisation du mode allegro
         allegro_exit();
         exit(EXIT_FAILURE);
     }
-    jouerALLEGRO(A,cpt); // appelle de la fonciton jouer allegro
+    switch(ia)
+    {
+    case 0 :  jouerALLEGRO(A,cpt); // appelle de la fonciton jouer allegro
+        break;
+    case 1 : jouerIaAllegro(A,cpt,ia);
+        break;
+    case 2 : jouerIaAllegro(A,cpt,ia);
+        break;
+    }
 }
 
 int jouerALLEGRO(int A,int cpt) // fonciton de jeu en mode allegro
@@ -495,9 +517,273 @@ int jouerALLEGRO(int A,int cpt) // fonciton de jeu en mode allegro
             affichageTerrainALLEGRO(matrice,tabBitmap,buffer,tabPlayer,cpt);  // traitement en fonction du choix d'affige
             cpt=cpt+1;
             endgame = findWin(tabBox, tabGoal, dimB, dimG);
+//            if(failedGame(matrice))
+//            {
+//                system("cls");
+//                printf("\n\n                Perdu !     \n\n");
+//                printf("\n\n             recommence ;)    \n\n");
+//                Sleep(3000);
+//                 exit(EXIT_SUCCESS); // on quitte le programme
+//            }
         }
     }
-     A=5;
+    if( A == 1)
+    {
+        jouerALLEGRO(4,cpt);
+    }
+    else if( A == 4)
+    {
+        jouerALLEGRO(5,cpt);
+    }
+    else if(A == 5)
+    {
+        system("cls");
+
+        clear_bitmap(screen); // réinitialisation du screen
+        draw_sprite(screen,victoire,0,0); // affichage de la bitmap de victoire
+        buffscore=loadScore();
+
+        textprintf_centre_ex(screen, font, 380, 430, makecol(50,255,140), 0, "BEST SCORE = %d", buffscore); // affichage du score sauvegarder
+        textprintf_centre_ex(screen, font, 380, 460, makecol(255,140,50), 0, " YOUR SCORE = %d ", cpt); // affichage du score du joueur
+
+        saveScore(cpt); // sauvegarde du score
+        Sleep(10000); // temporisation
+
+        allegro_exit(); // fin allegro
+
+    }
+    menu(); // retour menu
+
+}
+
+int jouerIaAllegro(int A, int cpt, int ia)
+{
+    int endgame;
+    unsigned int matrice[nbRowsMatrix][nbColsMatrix];
+
+    int dimB=0;
+    int dimP=0;
+    int dimW=0;
+    int dimG=0;
+
+    char key=0;
+    int touche=0;
+    int temp=0;
+
+    system("cls");
+
+    if(A == 1)  // chargement du niveau désiré
+    {
+        loadfile(terrainFile1,matrice);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
+    }
+    if(A == 2)
+    {
+        loadfile(saveFile1,matrice);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
+    }
+    if(A == 4)
+    {
+        loadfile(terrainFile2,matrice);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
+    }
+    if(A == 5)
+    {
+        loadfile(terrainFile3,matrice);
+        recupDimTabs(matrice, &dimB, &dimP, &dimW, &dimG);
+    }
+
+
+    BITMAP *buffer; // déclaration des ressources allegro
+    buffer=create_bitmap(WINDOH,WINDOL);
+    if (!buffer)
+    {
+        allegro_message("prb allocation BITMAP bmp \n");
+        allegro_exit();
+        exit(EXIT_FAILURE);
+    }
+
+    Box *tabBox = dynamicAllocBox(dimB);
+    Wall *tabWall = dynamicAllocWall(dimW);
+    Player *tabPlayer = dynamicAllocPlayer(dimP);
+    Goal *tabGoal = dynamicAllocGoal(dimG);
+
+    BITMAP **tabBitmap;                   // creation du tabeau de BITMAP
+    tabBitmap=initTabBitmap();            // implémentation du tableau de BITMAP
+    BITMAP *victoire;
+    victoire = load_bitmap("victoire.bmp",NULL);
+    if (!victoire)
+    {
+        printf("Couldn't load victoire.bmp!");
+    }
+    int buffscore=0;
+    int allea=0;
+    int dir=1;
+    int i;
+    int j;
+    int w = 0;
+    int b = 0;
+    int p = 0;
+    int g = 0;
+
+    for(i=0 ; i<nbRowsMatrix ; i++)
+    {
+        for(j=0 ; j<nbColsMatrix ; j++)
+        {
+            if(matrice[i][j] == 2)
+            {
+                tabWall[w].pos_x = i;
+                tabWall[w].pos_y = j;
+                w = w + 1;
+                continue;
+            }
+
+            if(matrice[i][j] == 3)
+            {
+                tabBox[b].pos_x = i;
+                tabBox[b].pos_y = j;
+                b = b + 1;
+                continue;
+            }
+
+            if(matrice[i][j] == 4)
+            {
+                tabPlayer[p].pos_x=i;
+                tabPlayer[p].pos_y=j;
+                p = p + 1;
+                continue;
+            }
+
+            if(matrice[i][j] == 6)
+            {
+                tabGoal[g].pos_x=i;
+                tabGoal[g].pos_y=j;
+                g = g + 1;
+                continue;
+            }
+        }
+    }
+
+    affichageTerrainALLEGRO(matrice,tabBitmap,buffer,tabPlayer,cpt);  // traitement en fonction du choix d'affige
+
+    while (endgame !=1)
+    {
+
+            system("cls");
+
+           if(ia == 1)
+           {
+            allea=rand()%4;
+            switch(allea)
+            {
+            case 0 :
+                key='z';
+                break;
+            case 1 :
+                key='q';
+                break;
+            case 2 :
+                key='s';
+                break;
+            case 3 :
+                key='d';
+                break;
+            }
+
+            }
+
+            if(ia==2)
+            {
+            for(i=0 ; i<nbRowsMatrix ; i++) // remplisage des tabeaux avec les valeurs charger dans la matrice
+            {
+                for(j=0 ; j<nbColsMatrix ; j++)
+                    {
+                        if(matrice[i][j]==4)
+                        {
+                            if((matrice[i][j-2]==2) && dir==1) {dir=0;}
+                            if((matrice[i-2][j]==2) && dir==0) {dir=3;}
+                            if((matrice[i][j+2]==2) && dir==3) {dir=2;}
+                            if((matrice[i+2][j]==2) && dir==2) {dir=1;}
+                        }
+                    }
+            }
+            allea = rand()%7;
+            if(allea == 1)
+            {
+                dir=rand()%4;
+                printf("tout le temps dans allea");
+            }
+            switch(dir)
+            {
+
+            case 0 :
+                key='z';
+                break;
+            case 1 :
+                key='q';
+                break;
+            case 2 :
+                key='s';
+                break;
+            case 3 :
+                key='d';
+                break;
+            }
+
+            }
+
+            switch(key)
+            {
+
+            case 'z' :
+                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
+                implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
+                tabPlayer[0].dirrection=0;
+                break;
+
+            case 'q' :
+                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
+                implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
+                tabPlayer[0].dirrection=1;
+                break;
+
+            case 's' :
+                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
+                implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
+                tabPlayer[0].dirrection=2;
+                break;
+
+            case 'd' :
+                movePlayer(tabPlayer, key, tabBox, tabWall, dimB, dimW);
+                implementationMatrice(matrice, tabBox, tabPlayer, tabGoal, dimB, dimP, dimG);
+                tabPlayer[0].dirrection=3;
+                break;
+
+            case 'k' :
+                jouerALLEGRO(A,0);
+                break;
+
+            case 'p' :
+                saveFile(matrice);
+                break;
+            case 'm' :
+                destroy_bitmap(victoire);
+                for(i=0; i<NIMAGE; i++)
+                {
+                    destroy_bitmap(tabBitmap[i]);
+                }
+                allegro_exit();
+                menu();
+
+                break;
+
+            }
+
+            affichageTerrainALLEGRO(matrice,tabBitmap,buffer,tabPlayer,cpt);  // traitement en fonction du choix d'affige
+            cpt=cpt+1;
+            endgame = findWin(tabBox, tabGoal, dimB, dimG);
+        }
+
     if( A == 1)
     {
         jouerALLEGRO(4,cpt);
@@ -580,9 +866,11 @@ int option () // sous menu d'option utilisateur
         printf("                                                                          \n");
         printf("                                                                          \n");
         printf("                                                                        \n\n");
-        printf("                                1. Affichage console     \n\n");
-        printf("                                2. Affichage Allegro    \n\n");
-        printf("                                4. Retour    \n\n");
+        printf("                                1. Affichage console                    \n\n");
+        printf("                                2. Affichage Allegro                    \n\n");
+        printf("                                3. ia 1                                 \n\n");
+        printf("                                4. ia 2                                 \n\n");
+        printf("                                5. Retour                               \n\n");
 
         scanf("%d",&choix);
         switch (choix)
@@ -595,9 +883,15 @@ int option () // sous menu d'option utilisateur
             modeAffichage=1;
             choix=101;
             break;
-        case 3 : //  musique
+        case 3 :
+            ia=1;
+            choix = 101; // retour
             break;
         case 4 :
+            ia=2;
+            choix = 101; // retour
+            break;
+        case 5 :
             choix = 101; // retour
             break;
         default:
@@ -864,7 +1158,7 @@ void saveFile(unsigned int matrice[nbRowsMatrix][nbColsMatrix]) // fonction de s
     }
 }
 
-void saveScore(int cpt) // fonction de sauvegarde du score
+void saveScore(int cpt) // fonction blindage de caisse coincée
 {
     int previous_cpt;
     previous_cpt = loadScore();
@@ -896,6 +1190,34 @@ void saveScore(int cpt) // fonction de sauvegarde du score
         fclose(fichier);
     }
 }
+int failedGame(unsigned int matrice[nbRowsMatrix][nbColsMatrix]) // fonction de vérification si caisse bloquée
+{
+        int i=0,j=0;
+        int cpt=0;
+
+         for(i=0 ; i<nbRowsMatrix ; i++) // remplisage des tabeaux avec les valeurs charger dans la matrice
+            {
+                for(j=0 ; j<nbColsMatrix ; j++)
+                    {
+                        if(matrice[i][j]==3)
+                        {
+                            if(matrice[i-1][j]==2) {cpt = cpt+1;} // vérification des cases a coté
+                            if(matrice[i][j+1]==2) {cpt = cpt+1;}
+                            if(matrice[i+1][j]==2) {cpt = cpt+1;}
+                            if(matrice[i][j-1]==2) {cpt = cpt+1;}
+                        }
+                    }
+            }
+        if(cpt>=2) // révification si niveau perdu
+        {
+            cpt=1;
+        }
+        else
+        {
+            cpt=0;
+        }
+            return (cpt);
+     }
 
 int loadScore() // fonction de lecture du meilleur score dans le fichier de score
 {
